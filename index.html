@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<!--
+  HSK6級 成語学習帳 INDEX
+  Copyright (c) 2025- 楓家中国語学習支援制作チーム
+  All Rights Reserved.
+  
+  本コンテンツ（テキスト・デザイン・コード・データを含むすべての要素）は
+  著作権法により保護されています。
+  著作権者の書面による事前許可なく、複製・転載・配布・改変・商業利用を
+  禁じます。個人の学習目的での閲覧のみ許可します。
+  
+  HSK6 Chinese Chengyu Flashcard INDEX
+  Copyright (c) 2025- Kaede-ya Chinese Learning Support Team
+  All content is protected by copyright law.
+  No reproduction, redistribution, or commercial use without prior written
+  permission from the copyright holder.
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK6級 成語学習帳 — 全巻INDEX</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Serif+JP:wght@400;600&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a0f0a;
+  --paper: #f5ede0;
+  --red: #c0392b;
+  --gold: #c9962a;
+  --jade: #2d7d6f;
+  --purple: #7b5ea7;
+  --faded: #8b7355;
+  --light-paper: #fdf6ec;
+  --border: rgba(201,150,42,0.35);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Noto Serif JP',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse at 20% 20%,rgba(201,150,42,.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 80%,rgba(45,125,111,.05) 0%,transparent 55%);
+  pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;inset:10px;
+  border:1px solid rgba(201,150,42,.25);
+  pointer-events:none;z-index:999;
+}
+
+/* ===== HEADER ===== */
+.page-wrapper{
+  position:relative;z-index:1;
+  max-width:960px;
+  margin:0 auto;
+  padding:48px 24px 80px;
+}
+.header{text-align:center;margin-bottom:56px;}
+.deco-line{
+  display:flex;align-items:center;justify-content:center;
+  gap:16px;margin-bottom:14px;
+}
+.deco-line span{
+  height:1px;width:80px;
+  background:linear-gradient(90deg,transparent,var(--gold));
+}
+.deco-line span:last-child{
+  background:linear-gradient(90deg,var(--gold),transparent);
+}
+.deco-diamond{
+  width:7px;height:7px;
+  background:var(--gold);transform:rotate(45deg);
+}
+.main-title{
+  font-family:'Noto Serif JP',serif;
+  font-size:clamp(28px,5vw,42px);
+  font-weight:600;
+  letter-spacing:.3em;
+  color:var(--ink);
+  line-height:1.2;
+}
+.main-title em{color:var(--red);font-style:normal;}
+.subtitle{
+  font-size:13px;
+  letter-spacing:.4em;
+  color:var(--gold);
+  margin-top:10px;
+}
+.subtitle-jp{
+  font-size:11px;
+  color:var(--faded);
+  letter-spacing:.2em;
+  margin-top:6px;
+}
+
+/* ===== STATS BAR ===== */
+.stats-bar{
+  display:flex;justify-content:center;gap:32px;
+  margin-bottom:48px;
+  flex-wrap:wrap;
+}
+.stat-item{text-align:center;}
+.stat-num{
+  font-family:'Noto Serif SC',serif;
+  font-size:28px;font-weight:700;
+  color:var(--gold);
+  line-height:1;
+}
+.stat-label{
+  font-size:10px;
+  color:var(--faded);
+  letter-spacing:.15em;
+  margin-top:4px;
+}
+.stat-divider{
+  width:1px;height:40px;
+  background:var(--border);
+  align-self:center;
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title{
+  display:flex;align-items:center;gap:14px;
+  margin-bottom:24px;
+}
+.section-title::before,.section-title::after{
+  content:'';flex:1;height:1px;
+  background:var(--border);
+}
+.section-title span{
+  font-size:11px;letter-spacing:.3em;
+  color:var(--faded);white-space:nowrap;
+}
+
+/* ===== VOL CARDS ===== */
+.vol-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:20px;
+  margin-bottom:56px;
+}
+.vol-card{
+  background:var(--light-paper);
+  border:1px solid var(--border);
+  border-radius:2px;
+  overflow:hidden;
+  cursor:pointer;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+  transition:all .3s;
+  position:relative;
+}
+.vol-card::before{
+  content:'';position:absolute;inset:0;
+  background:var(--ink);
+  transform:translateY(100%);
+  transition:transform .35s ease;
+  z-index:0;
+}
+.vol-card:hover::before{transform:translateY(0);}
+.vol-card:hover .vc-num,
+.vol-card:hover .vc-title,
+.vol-card:hover .vc-sub,
+.vol-card:hover .vc-count,
+.vol-card:hover .vc-theme-tag{color:rgba(253,246,236,.75);}
+.vol-card:hover .vc-header-title{color:var(--paper);}
+.vol-card:hover .vc-accent{background:var(--gold);}
+.vol-card:hover .vc-arrow{color:var(--gold);}
+
+/* 過去問カード（Vol.1）特別スタイル */
+.vol-card.featured{
+  border-color:var(--gold);
+  grid-column: 1 / -1;
+}
+.vol-card.featured .vc-body{
+  display:flex;align-items:center;gap:24px;
+}
+
+.vc-header{
+  background:var(--ink);
+  padding:14px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;z-index:1;
+}
+.vol-card.featured .vc-header{
+  background:linear-gradient(135deg,var(--ink),#3a2010);
+}
+.vc-header-title{
+  font-size:11px;letter-spacing:.35em;
+  color:rgba(253,246,236,.6);
+  font-family:'Noto Serif JP',serif;
+}
+.vc-badge{
+  font-size:10px;letter-spacing:.1em;
+  background:var(--gold);color:var(--ink);
+  padding:3px 10px;border-radius:1px;
+  font-family:'Noto Serif JP',serif;
+}
+.vc-body{
+  padding:20px 20px 18px;
+  position:relative;z-index:1;
+}
+.vc-accent{
+  width:20px;height:3px;
+  background:var(--gold);
+  margin-bottom:12px;
+  transition:background .3s;
+}
+.vc-num{
+  font-family:'Noto Serif SC',serif;
+  font-size:36px;line-height:1;
+  color:var(--gold);
+  opacity:.25;
+  position:absolute;right:20px;bottom:16px;
+  transition:color .3s;
+}
+.vol-card.featured .vc-num{font-size:48px;opacity:.15;}
+.vc-title{
+  font-family:'Noto Serif SC',serif;
+  font-size:16px;letter-spacing:.1em;
+  margin-bottom:4px;
+  transition:color .3s;
+}
+.vc-sub{
+  font-size:11px;color:var(--faded);
+  letter-spacing:.15em;margin-bottom:12px;
+  transition:color .3s;
+}
+.vc-count{
+  font-size:12px;color:var(--faded);
+  letter-spacing:.05em;margin-bottom:10px;
+  transition:color .3s;
+}
+.vc-themes{display:flex;flex-wrap:wrap;gap:5px;}
+.vc-theme-tag{
+  font-size:10px;color:var(--faded);
+  border:1px solid var(--border);
+  padding:2px 8px;border-radius:1px;
+  letter-spacing:.05em;
+  transition:color .3s;
+}
+.vc-arrow{
+  font-size:18px;color:var(--border);
+  transition:color .3s;
+  margin-left:auto;
+  flex-shrink:0;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  text-align:center;
+  padding:28px 16px 0;
+  border-top:1px solid var(--border);
+}
+.footer-copy{
+  font-size:12px;color:var(--faded);
+  letter-spacing:.05em;margin-bottom:8px;
+}
+.footer-notice{
+  font-size:10px;
+  color:rgba(139,115,85,.6);
+  line-height:1.8;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+  .page-wrapper{padding:36px 16px 60px;}
+  .stats-bar{gap:20px;}
+  .stat-divider{display:none;}
+  .vol-card.featured .vc-body{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="deco-line">
+      <span></span>
+      <div class="deco-diamond"></div>
+      <span></span>
+    </div>
+    <div class="main-title">
+      <em>成語</em>学習帳
+    </div>
+    <div class="subtitle">HSK 6 CHENGYU FLASHCARDS</div>
+    <div class="subtitle-jp">全7巻　フラッシュカード・索引・テスト</div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">7</div>
+      <div class="stat-label">VOLUMES</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">1,157+</div>
+      <div class="stat-label">CHENGYU</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">STUDY MODES</div>
+    </div>
+  </div>
+
+  <!-- SECTION TITLE -->
+  <div class="section-title"><span>VOLUMES</span></div>
+
+  <!-- VOL GRID -->
+  <div class="vol-grid">
+
+    <!-- Vol.1 過去問（featured） -->
+    <a class="vol-card featured" href="hsk6_chengyu_vol1.html">
+      <div class="vc-header">
+        <div class="vc-header-title">HSK6級 成語学習帳</div>
+        <div class="vc-badge">過去問特集</div>
+      </div>
+      <div class="vc-body">
+        <div style="flex:1;">
+          <div class="vc-accent"></div>
+          <div class="vc-title">Vol.1　HSK6級 過去問成語</div>
+          <div class="vc-sub">頻出成語を厳選収録</div>
+          <div class="vc-count">196語収録</div>
+          <div class="vc-themes">
+            <span class="vc-theme-tag">🌊 水・火・大地</span>
+            <span class="vc-theme-tag">🔍 洞察・謀略</span>
+            <span class="vc-theme-tag">🌸 品性・徳</span>
+            <span class="vc-theme-tag">🎭 人生・運命</span>
+          </div>
+        </div>
+        <div class="vc-arrow">→</div>
+      </div>
+      <div class="vc-num">一</div>
+    </a>
+
+    <!-- Vol.2 -->
+    <a class="vol-card" href="hsk6_chengyu_vol2.html">
+      <div class="vc-header">
+        <div class="vc-header-title">HSK6級 成語学習帳</div>
+        <div class="vc-badge">Vol.2</div>
+      </div>
+      <div class="vc-body">
+        <div class="vc-accent"></div>
+        <div class="vc-title">No.1〜50</div>
+        <div class="vc-sub">VOLUME 2</div>
+        <div class="vc-count">205語収録</div>
+        <div class="vc-themes">
+          <span class="vc-theme-tag">⚔️ 戦略・機知</span>
+          <span class="vc-theme-tag">🧠 心理・思考</span>
+          <span class="vc-theme-tag">📖 勉強・成長</span>
+          <span class="vc-theme-tag">⚖️ 処世・道徳</span>
+        </div>
+        <div class="vc-num">二</div>
+      </div>
+    </a>
+
+    <!-- Vol.3 -->
+    <a class="vol-card" href="hsk6_chengyu_vol3.html">
+      <div class="vc-header">
+        <div class="vc-header-title">HSK6級 成語学習帳</div>
+        <div class="vc-badge">Vol.3</div>
+      </div>
+      <div class="vc-body">
+        <div class="vc-accent"></div>
+        <div class="vc-title">No.51〜100</div>
+        <div class="vc-sub">VOLUME 3</div>
+        <div class="vc-count">200語収録</div>
+        <div class="vc-themes">
+          <span class="vc-theme-tag">⚔️ 戦略・機知</span>
+          <span class="vc-theme-tag">🧠 心理・感情</span>
+          <span class="vc-theme-tag">📖 学問・才能</span>
+          <span class="vc-theme-tag">⚖️ 人間関係</span>
+        </div>
+        <div class="vc-num">三</div>
+      </div>
+    </a>
+
+    <!-- Vol.4 -->
+    <a class="vol-card" href="hsk6_chengyu_vol4.html">
+      <div class="vc-header">
+        <div class="vc-header-title">HSK6級 成語学習帳</div>
+        <div class="vc-badge">Vol.4</div>
+      </div>
+      <div class="vc-body">
+        <div class="vc-accent"></div>
+        <div class="vc-title">No.101〜150</div>
+        <div class="vc-sub">VOLUME 4</div>
+        <div class="vc-count">196語収録</div>
+        <div class="vc-themes">
+          <span class="vc-theme-tag">⚔️ 戦略・機知</span>
+          <span class="vc-theme-tag">🧠 心理・思考</span>
+          <span class="vc-theme-tag">📖 勉強・成長</span>
+          <span class="vc-theme-tag">⚖️ 処世・道徳</span>
+        </div>
+        <div class="vc-num">四</div>
+      </div>
+    </a>
+
+    <!-- Vol.5 -->
+    <a class="vol-card" href="hsk6_chengyu_vol5.html">
+      <div class="vc-header">
+        <div class="vc-header-title">HSK6級 成語学習帳</div>
+        <div class="vc-badge">Vol.5</div>
+      </div>
+      <div class="vc-body">
+        <div class="vc-accent"></div>
+        <div class="vc-title">No.151〜200</div>
+        <div class="vc-sub">VOLUME 5</div>
+        <div class="vc-count">200語収録</div>
+        <div class="vc-themes">
+          <span class="vc-theme-tag">⚔️ 戦略・機知</span>
+          <span class="vc-theme-tag">🧠 心理・感情</span>
+          <span class="vc-theme-tag">📖 学問・才能</span>
+          <span class="vc-theme-tag">⚖️ 処世・人間関係</span>
+        </div>
+        <div class="vc-num">五</div>
+      </div>
+    </a>
+
+    <!-- Vol.6 -->
+    <a class="vol-card" href="hsk6_chengyu_vol6.html">
+      <div class="vc-header">
+        <div class="vc-header-title">HSK6級 成語学習帳</div>
+        <div class="vc-badge">Vol.6</div>
+      </div>
+      <div class="vc-body">
+        <div class="vc-accent"></div>
+        <div class="vc-title">No.201〜250</div>
+        <div class="vc-sub">VOLUME 6</div>
+        <div class="vc-count">160語収録</div>
+        <div class="vc-themes">
+          <span class="vc-theme-tag">🌿 自然・天地</span>
+          <span class="vc-theme-tag">💡 知恵・判断</span>
+          <span class="vc-theme-tag">🌸 品格・徳行</span>
+          <span class="vc-theme-tag">🏛️ 社会・時勢</span>
+        </div>
+        <div class="vc-num">六</div>
+      </div>
+    </a>
+
+    <!-- Vol.7 -->
+    <a class="vol-card" href="hsk6_chengyu_vol7.html">
+      <div class="vc-header">
+        <div class="vc-header-title">HSK6級 成語学習帳</div>
+        <div class="vc-badge">Vol.7</div>
+      </div>
+      <div class="vc-body">
+        <div class="vc-accent"></div>
+        <div class="vc-title">No.251〜300</div>
+        <div class="vc-sub">VOLUME 7</div>
+        <div class="vc-count">160語収録</div>
+        <div class="vc-themes">
+          <span class="vc-theme-tag">🌿 自然・天地</span>
+          <span class="vc-theme-tag">💡 知恵・判断</span>
+          <span class="vc-theme-tag">🌸 品格・徳行</span>
+          <span class="vc-theme-tag">🏛️ 社会・時勢</span>
+        </div>
+        <div class="vc-num">七</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-copy">© 2025- 楓家中国語学習支援制作チーム　All Rights Reserved.</div>
+    <div class="footer-notice">
+      本コンテンツは著作権法により保護されています。<br>
+      個人の学習目的での閲覧のみ許可します。無断転載・商業利用を禁じます。
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

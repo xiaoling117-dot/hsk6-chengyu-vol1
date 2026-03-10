@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<!--
+  HSK6級 成語学習帳 Vol.5
+  Copyright (c) 2025- 楓家中国語学習支援制作チーム
+  All Rights Reserved.
+  
+  本コンテンツ（テキスト・デザイン・コード・データを含むすべての要素）は
+  著作権法により保護されています。
+  著作権者の書面による事前許可なく、複製・転載・配布・改変・商業利用を
+  禁じます。個人の学習目的での閲覧のみ許可します。
+  
+  HSK6 Chinese Chengyu Flashcard Vol.5
+  Copyright (c) 2025- Kaede-ya Chinese Learning Support Team
+  All content is protected by copyright law.
+  No reproduction, redistribution, or commercial use without prior written
+  permission from the copyright holder.
+-->
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HSK6級 成語学習帳 Vol.6</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Serif+JP:wght@400;600&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #1a0f0a;
+  --paper: #f5ede0;
+  --red: #c0392b;
+  --gold: #c9962a;
+  --jade: #2d7d6f;
+  --purple: #7b5ea7;
+  --faded: #8b7355;
+  --light-paper: #fdf6ec;
+  --border: rgba(201,150,42,0.35);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Noto Serif JP',serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse at 20% 20%,rgba(201,150,42,.07) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 80%,rgba(45,125,111,.05) 0%,transparent 55%);
+  pointer-events:none;z-index:0;
+}
+body::after{
+  content:'';position:fixed;inset:10px;
+  border:1px solid rgba(201,150,42,.25);
+  pointer-events:none;z-index:999;
+}
+.screen{display:none;position:relative;z-index:1;min-height:100vh;}
+.screen.active{display:block;}
+
+/* ======= HOME ======= */
+#homeScreen{padding:40px 24px 60px;}
+.home-header{text-align:center;margin-bottom:44px;}
+.deco-line{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:10px;}
+.deco-line span{height:1px;width:70px;background:linear-gradient(90deg,transparent,var(--gold));}
+.deco-line span:last-child{background:linear-gradient(90deg,var(--gold),transparent);}
+.deco-diamond{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);}
+.home-title{font-family:'Noto Serif SC',serif;font-size:clamp(20px,4vw,30px);letter-spacing:.15em;}
+.home-title em{color:var(--red);font-style:normal;}
+.home-vol{font-size:12px;letter-spacing:.4em;color:var(--gold);margin-top:4px;font-family:'Noto Serif JP',serif;}
+.home-sub{font-size:11px;color:var(--faded);letter-spacing:.2em;margin-top:5px;}
+.home-footer{text-align:center;margin-top:56px;padding:24px 16px 8px;border-top:1px solid var(--border);}
+.footer-copy{font-size:12px;color:var(--faded);letter-spacing:.05em;margin-bottom:6px;}
+.footer-notice{font-size:10px;color:rgba(139,115,85,.6);line-height:1.6;}
+.home-nav{display:flex;gap:12px;justify-content:center;margin-bottom:40px;flex-wrap:wrap;}
+.nav-tab{padding:8px 20px;border:1px solid var(--border);background:none;font-family:'Noto Serif JP',serif;font-size:12px;letter-spacing:.15em;color:var(--faded);cursor:pointer;border-radius:2px;transition:all .2s;}
+.nav-tab:hover,.nav-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;max-width:900px;margin:0 auto;}
+.theme-card{background:var(--light-paper);border:1px solid var(--border);padding:24px 20px;border-radius:2px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.theme-card::before{content:'';position:absolute;inset:0;background:var(--ink);transform:translateY(100%);transition:transform .3s ease;z-index:0;}
+.theme-card:hover::before{transform:translateY(0);}
+.theme-card:hover .tc-name,.theme-card:hover .tc-count,.theme-card:hover .tc-words{color:var(--paper);}
+.theme-card:hover .tc-accent{background:var(--gold);}
+.tc-accent{width:24px;height:3px;background:var(--gold);margin-bottom:14px;transition:background .3s;position:relative;z-index:1;}
+.tc-name{font-family:'Noto Serif SC',serif;font-size:18px;letter-spacing:.1em;margin-bottom:6px;position:relative;z-index:1;transition:color .3s;}
+.tc-count{font-size:11px;color:var(--faded);letter-spacing:.1em;margin-bottom:10px;position:relative;z-index:1;transition:color .3s;}
+.tc-words{font-size:12px;color:var(--faded);line-height:1.6;position:relative;z-index:1;transition:color .3s;}
+.index-preview{max-width:900px;margin:0 auto;}
+.index-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
+.index-row{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--light-paper);border:1px solid var(--border);border-radius:2px;cursor:pointer;transition:all .2s;position:relative;}
+.index-row:hover{background:var(--ink);color:var(--paper);}
+.index-row:hover .ir-pinyin{color:rgba(253,246,236,.6);}
+.ir-word{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:600;}
+.ir-pinyin{font-size:11px;color:var(--faded);flex:1;}
+.ir-theme{font-size:10px;color:var(--gold);letter-spacing:.05em;}
+.ir-badges{display:flex;gap:3px;flex-shrink:0;}
+.ir-badge{font-size:11px;}
+
+/* ======= FLASHCARD ======= */
+#cardScreen{padding:28px 20px 60px;max-width:860px;margin:0 auto;}
+.screen-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.back-btn{background:none;border:1px solid var(--border);color:var(--faded);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.back-btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.screen-title{font-family:'Noto Serif SC',serif;font-size:18px;letter-spacing:.1em;}
+.mode-btns{margin-left:auto;display:flex;gap:8px;}
+.mode-btn{padding:6px 14px;border:1px solid var(--border);background:none;font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:.1em;color:var(--faded);cursor:pointer;border-radius:2px;transition:all .2s;}
+.mode-btn:hover,.mode-btn.active{background:var(--red);color:white;border-color:var(--red);}
+.progress-area{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
+.progress-bar-wrap{flex:1;height:3px;background:rgba(139,115,85,.2);border-radius:2px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--red));border-radius:2px;transition:width .5s ease;}
+.progress-text{font-size:12px;color:var(--faded);white-space:nowrap;}
+.card-container{perspective:1400px;margin-bottom:24px;}
+.card-wrapper{position:relative;width:100%;height:620px;}
+.card{position:absolute;width:100%;height:620px;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,0,.2,1);cursor:pointer;}
+.card.flipped{transform:rotateY(180deg);}
+.card-face{position:absolute;top:0;left:0;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:2px;overflow-y:auto;overflow-x:hidden;}
+.card-front{background:var(--light-paper);border:1px solid var(--border);box-shadow:4px 4px 0 rgba(26,15,10,.05),0 16px 48px rgba(26,15,10,.1);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;position:relative;}
+.corner{position:absolute;width:18px;height:18px;}
+.corner::before,.corner::after{content:'';position:absolute;background:var(--gold);}
+.corner::before{width:100%;height:1px;top:0;left:0;}
+.corner::after{width:1px;height:100%;top:0;left:0;}
+.corner.tl{top:14px;left:14px;}
+.corner.tr{top:14px;right:14px;transform:scaleX(-1);}
+.corner.bl{bottom:14px;left:14px;transform:scaleY(-1);}
+.corner.br{bottom:14px;right:14px;transform:scale(-1);}
+.card-badge{position:absolute;top:16px;right:16px;font-size:11px;color:var(--faded);}
+.front-label{font-size:10px;letter-spacing:.3em;color:var(--faded);margin-bottom:24px;}
+.chengyu-main{font-family:'Ma Shan Zheng','Noto Serif SC',serif;font-size:clamp(50px,10vw,78px);color:var(--ink);letter-spacing:.1em;line-height:1;margin-bottom:18px;text-shadow:2px 2px 0 rgba(201,150,42,.12);}
+.pinyin-main{font-size:17px;color:var(--red);letter-spacing:.18em;margin-bottom:6px;}
+.flip-hint{font-size:10px;color:var(--faded);letter-spacing:.15em;margin-top:20px;display:flex;align-items:center;gap:8px;}
+.flip-hint::before,.flip-hint::after{content:'◇';color:var(--gold);font-size:7px;}
+.card-back{background:var(--light-paper);border:1px solid var(--border);box-shadow:4px 4px 0 rgba(26,15,10,.05),0 16px 48px rgba(26,15,10,.1);transform:rotateY(180deg);padding:28px 32px 28px;}
+.back-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.back-chengyu{font-family:'Ma Shan Zheng','Noto Serif SC',serif;font-size:28px;}
+.back-pinyin{font-size:14px;color:var(--red);letter-spacing:.08em;flex:1;}
+.speak-btn{background:none;border:1px solid var(--gold);color:var(--gold);width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;flex-shrink:0;}
+.speak-btn:hover{background:var(--gold);color:white;}
+.speak-btn.speaking{animation:pulse .8s ease infinite;background:var(--gold);color:white;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+.meaning-section{background:rgba(201,150,42,.06);border-left:3px solid var(--gold);padding:11px 15px;margin-bottom:16px;border-radius:0 2px 2px 0;}
+.meaning-text{font-size:14px;line-height:1.75;color:var(--ink);}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:580px){.info-grid{grid-template-columns:1fr;}}
+.info-card{border:1px solid rgba(139,115,85,.22);border-radius:2px;padding:12px 14px;background:rgba(255,255,255,.35);}
+.info-card-label{font-size:9px;letter-spacing:.25em;color:var(--faded);margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.info-card-label::before{content:'';width:14px;height:1px;background:var(--faded);}
+.syn{border-top:2px solid var(--jade);}
+.syn .info-card-label{color:var(--jade);}
+.syn .info-card-label::before{background:var(--jade);}
+.ant{border-top:2px solid var(--red);}
+.ant .info-card-label{color:var(--red);}
+.ant .info-card-label::before{background:var(--red);}
+.conf{border-top:2px solid var(--purple);grid-column:1/-1;}
+.conf .info-card-label{color:var(--purple);}
+.conf .info-card-label::before{background:var(--purple);}
+.ex-card{border-top:2px solid var(--jade);grid-column:1/-1;border:1px solid rgba(45,125,111,.25);border-radius:2px;padding:12px 14px;background:rgba(45,125,111,.04);}
+.ex-label{font-size:9px;letter-spacing:.25em;color:var(--jade);margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.ex-label::before{content:'';width:14px;height:1px;background:var(--jade);}
+.info-item{margin-bottom:8px;}
+.info-item:last-child{margin-bottom:0;}
+.info-item-header{display:flex;align-items:center;gap:4px;flex-wrap:wrap;}
+.info-chinese{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:600;}
+.info-pinyin{font-size:11px;color:var(--red);flex:1;}
+.info-meaning{font-size:11px;color:var(--faded);margin-top:2px;line-height:1.5;}
+.mini-speak-btn{background:none;border:1px solid rgba(139,115,85,.3);color:var(--faded);width:30px;height:30px;border-radius:50%;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:13px;transition:all .18s;padding:0;flex-shrink:0;}
+.mini-speak-btn:hover{border-color:var(--gold);color:var(--gold);}
+.mini-speak-btn.speaking{animation:pulse .8s ease infinite;background:var(--gold);color:white;border-color:var(--gold);}
+.ex-zh{font-family:'Noto Serif SC',serif;font-size:14px;line-height:1.8;color:var(--ink);margin-bottom:3px;}
+.ex-zh .hl{color:var(--red);font-weight:600;}
+.ex-py{font-size:10px;color:var(--faded);line-height:1.5;margin-bottom:3px;}
+.ex-ja{font-size:11px;color:var(--faded);border-top:1px dashed rgba(139,115,85,.2);padding-top:5px;line-height:1.6;}
+.nav-area{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:4px;}
+.nav-btn{background:none;border:1px solid rgba(139,115,85,.35);color:var(--ink);width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.nav-btn:hover:not(:disabled){border-color:var(--gold);color:var(--gold);}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;}
+.flip-btn{background:var(--ink);color:var(--paper);border:none;padding:12px 32px;border-radius:2px;font-family:'Noto Serif JP',serif;font-size:12px;letter-spacing:.2em;cursor:pointer;transition:background .25s;}
+.flip-btn:hover{background:var(--red);}
+.dots{display:flex;gap:5px;justify-content:center;margin-top:16px;flex-wrap:wrap;}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(139,115,85,.3);cursor:pointer;transition:all .3s;}
+.dot.active{background:var(--gold);transform:scale(1.4);}
+.dot.is-learned{background:var(--jade);opacity:.7;}
+.dot.is-weak{background:var(--red);opacity:.7;}
+.dot.active{opacity:1;transform:scale(1.4);}
+.tts-status{text-align:center;font-size:10px;color:var(--faded);margin-top:8px;min-height:14px;letter-spacing:.08em;}
+.card.slide-out-l{animation:solL .28s ease forwards;}
+.card.slide-in-r{animation:sirR .3s ease forwards;}
+.card.slide-out-r{animation:sorR .28s ease forwards;}
+.card.slide-in-l{animation:silL .3s ease forwards;}
+@keyframes solL{to{transform:translateX(-70px);opacity:0;}}
+@keyframes sirR{from{transform:translateX(70px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+@keyframes sorR{to{transform:translateX(70px);opacity:0;}}
+@keyframes silL{from{transform:translateX(-70px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+
+/* ======= TEST ======= */
+#testScreen{padding:28px 20px 60px;max-width:780px;margin:0 auto;}
+.test-type-bar{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+.test-type-btn{padding:7px 16px;border:1px solid var(--border);background:none;font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:.1em;color:var(--faded);cursor:pointer;border-radius:2px;transition:all .2s;}
+.test-type-btn.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.test-score-bar{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.score-label{font-size:11px;color:var(--faded);letter-spacing:.1em;}
+.score-val{font-size:22px;font-weight:700;color:var(--red);}
+.score-val span{font-size:14px;color:var(--faded);font-weight:400;}
+.test-card{background:var(--light-paper);border:1px solid var(--border);border-radius:2px;padding:24px 20px;}
+.test-q-word{font-family:'Ma Shan Zheng','Noto Serif SC',serif;font-size:40px;text-align:center;margin-bottom:8px;letter-spacing:.1em;}
+.test-q-pinyin{text-align:center;font-size:14px;color:var(--red);letter-spacing:.15em;margin-bottom:6px;}
+.test-q-meaning{text-align:center;font-size:14px;color:var(--faded);line-height:1.65;margin-bottom:20px;padding:0 10px;}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;}
+@media(max-width:500px){.choices{grid-template-columns:1fr;}}
+.choice-btn{background:rgba(255,255,255,.5);border:1px solid rgba(139,115,85,.25);padding:13px 16px;border-radius:2px;text-align:left;font-family:'Noto Serif JP',serif;font-size:13px;cursor:pointer;transition:all .2s;line-height:1.5;}
+.choice-btn:hover:not(:disabled){border-color:var(--gold);background:rgba(201,150,42,.06);}
+.choice-btn.correct{background:rgba(45,125,111,.12);border-color:var(--jade);color:var(--jade);}
+.choice-btn.wrong{background:rgba(192,57,43,.08);border-color:var(--red);color:var(--red);}
+.choice-btn:disabled{cursor:default;}
+.choice-chinese{font-family:'Noto Serif SC',serif;font-size:15px;font-weight:600;display:block;}
+.pinyin-input-wrap{display:flex;flex-direction:column;gap:10px;align-items:stretch;}
+.pinyin-input{width:100%;border:1px solid var(--border);background:rgba(255,255,255,.6);padding:13px 14px;font-size:15px;font-family:'Noto Serif JP',serif;border-radius:2px;outline:none;transition:border .2s;}
+.pinyin-input:focus{border-color:var(--gold);}
+.pinyin-input.correct{border-color:var(--jade);background:rgba(45,125,111,.08);}
+.pinyin-input.wrong{border-color:var(--red);background:rgba(192,57,43,.06);}
+.submit-btn{width:100%;padding:13px 20px;background:var(--ink);color:var(--paper);border:none;font-family:'Noto Serif JP',serif;font-size:13px;letter-spacing:.15em;cursor:pointer;border-radius:2px;transition:background .2s;}
+.submit-btn:hover{background:var(--red);}
+.pinyin-hint{font-size:10px;color:var(--faded);margin-bottom:4px;line-height:1.5;}
+.pinyin-feedback{font-size:12px;margin-top:8px;min-height:16px;}
+.pinyin-feedback.correct{color:var(--jade);}
+.pinyin-feedback.wrong{color:var(--red);}
+.test-result-box{background:rgba(45,125,111,.06);border:1px solid rgba(45,125,111,.2);padding:12px 16px;border-radius:2px;margin-top:12px;font-size:12px;line-height:1.7;color:var(--faded);display:none;}
+.test-result-box.show{display:block;}
+.result-word{font-family:'Noto Serif SC',serif;font-size:15px;color:var(--ink);margin-bottom:4px;}
+.next-test-btn{display:block;width:100%;padding:13px;background:var(--ink);color:var(--paper);border:none;font-family:'Noto Serif JP',serif;font-size:13px;letter-spacing:.2em;cursor:pointer;border-radius:2px;transition:background .2s;margin-top:12px;}
+.next-test-btn:hover{background:var(--red);}
+.test-complete{text-align:center;padding:40px 20px;}
+.tc-score{font-size:48px;font-weight:700;color:var(--red);margin-bottom:8px;}
+.tc-msg{font-size:14px;color:var(--faded);margin-bottom:24px;}
+.restart-btn{padding:12px 32px;background:var(--ink);color:var(--paper);border:none;font-family:'Noto Serif JP',serif;font-size:13px;letter-spacing:.2em;cursor:pointer;border-radius:2px;transition:background .2s;}
+.restart-btn:hover{background:var(--red);}
+
+/* 共通追加機能 */
+.vol-link-bar{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.vol-link-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border:1px solid var(--border);background:var(--light-paper);color:var(--faded);font-family:'Noto Serif JP',serif;font-size:12px;letter-spacing:.08em;border-radius:2px;cursor:pointer;text-decoration:none;transition:all .25s;}
+.vol-link-btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink);}
+.progress-summary{max-width:900px;margin:0 auto 24px;background:var(--light-paper);border:1px solid var(--border);padding:13px 20px;border-radius:2px;}
+.ps-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.ps-label{font-size:11px;color:var(--faded);letter-spacing:.1em;white-space:nowrap;}
+.ps-bar{flex:1;min-width:80px;height:4px;background:rgba(139,115,85,.2);border-radius:2px;overflow:hidden;}
+.ps-fill{height:100%;background:linear-gradient(90deg,var(--jade),var(--gold));border-radius:2px;transition:width .6s ease;}
+.ps-count{font-size:12px;color:var(--jade);font-weight:600;white-space:nowrap;}
+.ps-weak-link{font-size:11px;color:var(--red);cursor:pointer;text-decoration:underline;text-underline-offset:2px;white-space:nowrap;}
+.ps-weak-link:hover{opacity:.7;}
+.weak-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;max-width:900px;margin:0 auto;}
+.weak-empty{text-align:center;padding:50px 20px;color:var(--faded);font-size:13px;line-height:2;}
+.weak-row{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--light-paper);border:1px solid rgba(192,57,43,.25);border-left:3px solid var(--red);border-radius:2px;cursor:pointer;transition:all .2s;}
+.weak-row:hover{background:rgba(192,57,43,.05);}
+.wr-word{font-family:'Noto Serif SC',serif;font-size:16px;font-weight:600;}
+.wr-pinyin{font-size:11px;color:var(--faded);flex:1;}
+.wr-del{background:none;border:none;color:rgba(139,115,85,.4);cursor:pointer;font-size:14px;transition:color .2s;padding:2px 4px;}
+.wr-del:hover{color:var(--red);}
+.card-action-area{position:absolute;top:14px;left:14px;display:flex;gap:6px;z-index:10;}
+.card-action-btn{background:rgba(253,246,236,.85);border:1px solid rgba(139,115,85,.3);width:30px;height:30px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .2s;padding:0;backdrop-filter:blur(2px);}
+.card-action-btn:hover{transform:scale(1.15);}
+.card-action-btn.active-learned{background:rgba(45,125,111,.15);border-color:var(--jade);}
+.card-action-btn.active-weak{background:rgba(192,57,43,.15);border-color:var(--red);}
+.card-status-row{font-size:10px;margin-top:10px;min-height:15px;letter-spacing:.08em;display:flex;gap:10px;justify-content:center;}
+.status-learned{color:var(--jade);}
+.status-weak{color:var(--red);}
+</style>
+</head>
+<body>
+
+<!-- ========== HOME ========== -->
+<div id="homeScreen" class="screen active">
+  <div class="home-header">
+    <div class="deco-line"><span></span><div class="deco-diamond"></div><span></span></div>
+    <div class="home-title">HSK 6級 <em>成語</em> 学習帳</div>
+    <div class="home-vol">Vol. 6　／　No.201〜250</div>
+    <div class="home-sub">フラッシュカード · 索引 · テスト · 学習管理</div>
+  </div>
+
+    <div class="vol-link-bar">
+    <a class="vol-link-btn" href="index.html" target="_blank">🏠 INDEX</a>
+    <a class="vol-link-btn" href="hsk6_chengyu_vol1.html" target="_blank">◀ Vol.1（過去問）</a>
+    <a class="vol-link-btn" href="hsk6_chengyu_vol2.html" target="_blank">◀ Vol.2</a>
+    <a class="vol-link-btn" href="hsk6_chengyu_vol3.html" target="_blank">◀ Vol.3</a>
+    <a class="vol-link-btn" href="hsk6_chengyu_vol4.html" target="_blank">◀ Vol.4</a>
+    <a class="vol-link-btn" href="hsk6_chengyu_vol5.html" target="_blank">◀ Vol.5</a>
+    <a class="vol-link-btn" href="hsk6_chengyu_vol7.html" target="_blank">Vol.7 ▶</a>
+  </div>
+
+  <div class="progress-summary">
+    <div class="ps-row">
+      <div class="ps-label">学習進捗</div>
+      <div class="ps-bar"><div class="ps-fill" id="psFill" style="width:0%"></div></div>
+      <div class="ps-count" id="psCount">0 / 50</div>
+      <div class="ps-weak-link" id="psWeakLink" onclick="showHomeTab('weak')">⚠️ 苦手 0語</div>
+    </div>
+  </div>
+
+  <div class="home-nav">
+    <button class="nav-tab active" onclick="showHomeTab('themes')">📚 テーマ別学習</button>
+    <button class="nav-tab" onclick="showHomeTab('index')">📋 索引</button>
+    <button class="nav-tab" onclick="showHomeTab('weak')">⚠️ 苦手リスト</button>
+  </div>
+  <div id="homeThemes" class="theme-grid"></div>
+  <div id="homeIndex" class="index-preview" style="display:none;">
+    <div class="index-grid" id="indexGrid"></div>
+  </div>
+  <div id="homeWeak" style="display:none;">
+    <div id="weakContent"></div>
+  </div>
+
+  <footer class="home-footer">
+    <div class="footer-copy">© 2025- 楓家中国語学習支援制作チーム　All Rights Reserved.</div>
+    <div class="footer-notice">本コンテンツの無断複製・転載・配布・商業利用を禁じます。個人学習目的の閲覧のみ許可します。</div>
+  </footer>
+</div>
+
+<!-- ========== FLASHCARD ========== -->
+<div id="cardScreen" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div><div class="screen-title" id="cardScreenTitle">成語</div></div>
+    <div class="mode-btns">
+      <button class="mode-btn active" onclick="switchMode('card')">カード</button>
+      <button class="mode-btn" onclick="switchMode('test')">テスト</button>
+    </div>
+  </div>
+  <div class="progress-area">
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">1 / 10</div>
+  </div>
+  <div class="card-container">
+    <div class="card-wrapper">
+      <div class="card" id="card" onclick="flipCard()">
+        <div class="card-face card-front" id="cardFront">
+          <div class="corner tl"></div><div class="corner tr"></div>
+          <div class="corner bl"></div><div class="corner br"></div>
+          <div class="card-action-area">
+            <button class="card-action-btn" id="learnedBtn" onclick="toggleLearned(event)" title="学習済みにする">✓</button>
+            <button class="card-action-btn" id="weakBtn" onclick="toggleWeak(event)" title="苦手に追加">★</button>
+          </div>
+          <div class="card-badge" id="cardBadge">201</div>
+          <div class="front-label">成語</div>
+          <div class="chengyu-main" id="frontChengyu"></div>
+          <div class="pinyin-main" id="frontPinyin"></div>
+          <div class="card-status-row" id="cardStatusRow"></div>
+          <div class="flip-hint">タップして詳細を見る</div>
+        </div>
+        <div class="card-face card-back" id="cardBack">
+          <div class="back-header">
+            <div>
+              <div class="back-chengyu" id="backChengyu"></div>
+              <div class="back-pinyin" id="backPinyin"></div>
+            </div>
+            <button class="speak-btn" id="speakBtn" onclick="speakCurrent(event)" title="音声再生">🔊</button>
+          </div>
+          <div class="meaning-section"><div class="meaning-text" id="backMeaning"></div></div>
+          <div class="info-grid" id="infoGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nav-area">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">←</button>
+    <button class="flip-btn" onclick="flipCard()"><span id="flipBtnText">めくる</span></button>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">→</button>
+  </div>
+  <div class="tts-status" id="ttsStatus"></div>
+  <div class="dots" id="dots"></div>
+</div>
+
+<!-- ========== TEST ========== -->
+<div id="testScreen" class="screen">
+  <div class="screen-header">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="screen-title" id="testScreenTitle">テスト</div>
+  </div>
+  <div class="test-type-bar">
+    <button class="test-type-btn active" onclick="setTestType('meaning')">意味を当てる</button>
+    <button class="test-type-btn" onclick="setTestType('word')">成語を当てる</button>
+    <button class="test-type-btn" onclick="setTestType('pinyin')">拼音を入力</button>
+  </div>
+  <div class="test-score-bar">
+    <div class="score-label">スコア</div>
+    <div class="score-val" id="testScore">0 <span>/ 0</span></div>
+    <div class="score-label" id="testProgress" style="margin-left:auto;"></div>
+  </div>
+  <div id="testContent"></div>
+</div>
+
+<script>
+// ===================== DATA (Vol.5 No.201-250) =====================
+const themes = [
+  {
+    id:"nature5", name:"🌿 自然・天地", color:"#2d7d6f",
+    words:[
+      {word:"沧海桑田",pinyin:"cāng hǎi sāng tián",meaning:"蒼海が桑畑になる。世の中が激しく変化すること。",
+       origin:"出典：葛洪『神仙伝』。仙女・麻姑が王方平に「私が接待を受けてから東海が三度、桑畑に変わるのを見た」と語ったことに由来。世界の激変・時代の移り変わりを象徴する表現。",
+       example:{zh:"几十年过去，这里沧海桑田，昔日的农村已变成了繁华的都市。",pinyin:"Jǐ shí nián guòqù, zhèlǐ cāng hǎi sāng tián, xīrì de nóngcūn yǐ biànchéngle fánhuá de dūshì.",ja:"数十年が過ぎ、ここは沧海桑田（蒼海が桑畑になるような変化）で、かつての農村は繁栄した都市に変わった。"},
+       synonyms:[{word:"时过境迁",pinyin:"shí guò jìng qiān",meaning:"時が過ぎ境遇が変わる"}],
+       antonyms:[{word:"一成不变",pinyin:"yī chéng bù biàn",meaning:"全く変わらない"}],
+       confuse:[{word:"日新月异",pinyin:"rì xīn yuè yì",meaning:"「沧海桑田」は大規模な変化・時代の流れを強調、「日新月异」は日々刻々と新しく変化し続けることを強調。"}]},
+      {word:"春风化雨",pinyin:"chūn fēng huà yǔ",meaning:"春の風と恵みの雨。思いやりのある教育や指導のこと。",
+       origin:"出典：『孟子・尽心上』。「有如时雨化之者」（時宜を得た雨のように変化させる者）という表現に由来。春の風と雨が万物を潤すように、良い教えや影響が人々を感化することを表す。",
+       example:{zh:"老师的春风化雨般的教导，让他在迷茫中找到了人生的方向。",pinyin:"Lǎoshī de chūn fēng huà yǔ bān de jiàodǎo, ràng tā zài mímáng zhōng zhǎodàole rénshēng de fāngxiàng.",ja:"先生の春風化雨のような教えが、彼が迷いの中から人生の方向を見つける助けとなった。"},
+       synonyms:[{word:"循循善诱",pinyin:"xún xún shàn yòu",meaning:"順序よく巧みに導く"}],
+       antonyms:[{word:"疾言厉色",pinyin:"jí yán lì sè",meaning:"激しい言葉と厳しい表情（厳しい叱責）"}],
+       confuse:[{word:"润物无声",pinyin:"rùn wù wú shēng",meaning:"「春风化雨」は教育・感化のプロセスを強調、「润物无声」は静かに物を潤す自然の働き・静かな影響を表す。"}]},
+      {word:"滴水穿石",pinyin:"dī shuǐ chuān shí",meaning:"滴る水が石を穿つ。わずかな力でも継続すれば大きな成果が出ること。",
+       origin:"宋・羅大経『鶴林玉露』に「張乖崖……持判曰：一日一錢、千日千錢；縄鋸木断、水滴石穿」とある。少しずつ継続することの力を示す格言として広く知られる。",
+       example:{zh:"学习语言就要有滴水穿石的精神，每天坚持，终有一天会成功。",pinyin:"Xuéxí yǔyán jiù yào yǒu dī shuǐ chuān shí de jīngshén, měitiān jiānchí, zhōng yǒu yītiān huì chénggōng.",ja:"語学学習には滴水穿石の精神が必要で、毎日続ければいつか必ず成功する。"},
+       synonyms:[{word:"持之以恒",pinyin:"chí zhī yǐ héng",meaning:"恒心を持って最後まで続ける"}],
+       antonyms:[{word:"半途而废",pinyin:"bàn tú ér fèi",meaning:"途中で諦める"}],
+       confuse:[{word:"铁杵磨针",pinyin:"tiě chǔ mó zhēn",meaning:"「滴水穿石」は自然の力・積み重ねの比喩、「铁杵磨针」は李白の故事で、困難を乗り越える意志・努力の比喩。"}]},
+      {word:"风雨同舟",pinyin:"fēng yǔ tóng zhōu",meaning:"嵐の中で同じ舟に乗る。困難な状況で共に力を合わせること。",
+       origin:"出典：『孫子・九地篇』。「夫呉人与越人相悪也、当其同舟而済、遇風、其相救也如左右手」という記述に由来。呉越の宿敵が同じ舟に乗れば嵐の中では助け合うという比喩から、共に困難に立ち向かうことを表す。",
+       example:{zh:"在公司最困难的时期，全体员工风雨同舟，共同渡过了危机。",pinyin:"Zài gōngsī zuì kùnnán de shíqī, quántǐ yuángōng fēng yǔ tóng zhōu, gòngtóng dùguòle wēijī.",ja:"会社が最も困難な時期に、全従業員が風雨同舟で共に危機を乗り越えた。"},
+       synonyms:[{word:"同舟共济",pinyin:"tóng zhōu gòng jì",meaning:"同じ舟で共に渡る"}],
+       antonyms:[{word:"各自为政",pinyin:"gè zì wéi zhèng",meaning:"それぞれが独自に行動してバラバラ"}],
+       confuse:[{word:"同甘共苦",pinyin:"tóng gān gòng kǔ",meaning:"「风雨同舟」は危機・困難の状況での共同対処を強調、「同甘共苦」は喜びも苦しみも共に分かち合うことを強調。"}]},
+      {word:"山穷水尽",pinyin:"shān qióng shuǐ jìn",meaning:"山も尽き、水も尽きる。進退窮まって打つ手がない状態。",
+       origin:"出典：宋・陸游「游山西村」。「山重水複疑無路、柳暗花明又一村」という詩の対句から。山も水も尽きて道がないかと思えば、また新しい展開が開けるという意味合いで使われることも多い。",
+       example:{zh:"就在他山穷水尽、走投无路之时，一位老朋友伸出了援手。",pinyin:"Jiù zài tā shān qióng shuǐ jìn、zǒu tóu wú lù zhī shí, yī wèi lǎo péngyou shēn chūle yuánshǒu.",ja:"彼が山穷水尽、身の置き所がない時に、旧友が手を差し伸べてくれた。"},
+       synonyms:[{word:"走投无路",pinyin:"zǒu tóu wú lù",meaning:"逃げ道も進む道もない"}],
+       antonyms:[{word:"柳暗花明",pinyin:"liǔ àn huā míng",meaning:"柳が茂り花が明るく咲く（新たな展開）"}],
+       confuse:[{word:"穷途末路",pinyin:"qióng tú mò lù",meaning:"「山穷水尽」は自然の比喩で袋小路に追い詰められた状態、「穷途末路」は道が尽きた末路・没落した状態。"}]},
+      {word:"叶落归根",pinyin:"yè luò guī gēn",meaning:"葉は落ちて根に帰る。人は最終的に故郷に戻るもの。",
+       origin:"宋・释道原『景徳伝燈録』に「落叶帰根、来処不掌」とある。木の葉が散っても木の根元に帰るように、人は生まれ故郷や本質的なところに帰るという自然の道理を表す。",
+       example:{zh:"他在外漂泊了三十年，年老后终于叶落归根，回到了故乡。",pinyin:"Tā zài wài piāobóle sānshí nián, nián lǎo hòu zhōngyú yè luò guī gēn, huídàole gùxiāng.",ja:"彼は三十年間各地を転々とし、年老いてついに葉落帰根として故郷に戻った。"},
+       synonyms:[{word:"落叶归根",pinyin:"luò yè guī gēn",meaning:"落葉は根に帰る（同義語）"}],
+       antonyms:[{word:"背井离乡",pinyin:"bèi jǐng lí xiāng",meaning:"井戸と故郷を捨てて離れる"}],
+       confuse:[{word:"衣锦还乡",pinyin:"yī jǐn huán xiāng",meaning:"「叶落归根」は帰還・終着点として故郷を強調、「衣锦还乡」は成功・名誉を持って故郷に錦を飾ること。"}]},
+      {word:"万紫千红",pinyin:"wàn zǐ qiān hóng",meaning:"万の紫と千の紅。色とりどりで美しい様子。",
+       origin:"出典：宋・朱熹「春日」。「等闲識得東風面、万紫千紅総是春」という詩句に由来。春の花が色とりどりに咲き乱れる様子から、物事が豊かに多彩である状態を表す。",
+       example:{zh:"公园里万紫千红，各种花卉竞相开放，吸引了大批游客前来赏花。",pinyin:"Gōngyuán lǐ wàn zǐ qiān hóng, gè zhǒng huāhuì jìng xiāng kāifàng, xīyǐnle dàpī yóukè qián lái shǎng huā.",ja:"公園は万紫千紅で様々な花が競って咲き誇り、大勢の観光客が花見に訪れた。"},
+       synonyms:[{word:"五彩缤纷",pinyin:"wǔ cǎi bīn fēn",meaning:"五つの色が鮮やかに入り交じる"}],
+       antonyms:[{word:"黯然失色",pinyin:"àn rán shī sè",meaning:"暗くなって色を失う（輝きを失う）"}],
+       confuse:[{word:"五彩缤纷",pinyin:"wǔ cǎi bīn fēn",meaning:"「万紫千红」は花・春景色のイメージが強く詩的な表現、「五彩缤纷」はより広く物事の色彩・多様性を表す。"}]},
+      {word:"风平浪静",pinyin:"fēng píng làng jìng",meaning:"風が穏やかで波が静か。状況が穏やかで安定していること。",
+       origin:"宋・释道原の記述などに見られる表現。嵐の後の穏やかな海の様子から、社会・政治・生活が平穏で問題のない状態を表すようになった。",
+       example:{zh:"经历了一段时间的动荡后，公司终于恢复了风平浪静的正常运营状态。",pinyin:"Jīnglìle yī duàn shíjiān de dòngdàng hòu, gōngsī zhōngyú huīfùle fēng píng làng jìng de zhèngcháng yùnyíng zhuàngtài.",ja:"しばらくの混乱を経て、会社はついに風平浪静の通常業務の状態に戻った。"},
+       synonyms:[{word:"太平无事",pinyin:"tài píng wú shì",meaning:"太平で何事もない"}],
+       antonyms:[{word:"波涛汹涌",pinyin:"bō tāo xiōng yǒng",meaning:"波浪が激しく逆巻く"}],
+       confuse:[{word:"岁月静好",pinyin:"suì yuè jìng hǎo",meaning:"「风平浪静」は嵐の後の静けさ・安定した状況を表し動的な変化の後の平静を含意、「岁月静好」は穏やかで美しい日常・幸福な時間を表す。"}]},
+      {word:"春华秋实",pinyin:"chūn huá qiū shí",meaning:"春に花が咲き秋に実が結ぶ。努力が実を結ぶこと。",
+       origin:"三国・魏の曹丕「典論・論文」に「春華秋実、有文質也」とある。春に咲く花と秋に実る果実のように、努力の積み重ねが結果として実ることを表す。",
+       example:{zh:"多年来的刻苦学习终于春华秋实，他以优异成绩考上了理想的大学。",pinyin:"Duō nián lái de kèkǔ xuéxí zhōngyú chūn huá qiū shí, tā yǐ yōuyì chéngjì kǎoshàngle lǐxiǎng de dàxué.",ja:"長年の刻苦の勉学がついに春華秋実として実を結び、彼は優秀な成績で志望大学に合格した。"},
+       synonyms:[{word:"苦尽甘来",pinyin:"kǔ jìn gān lái",meaning:"苦労が終わって甘みが来る"}],
+       antonyms:[{word:"劳而无功",pinyin:"láo ér wú gōng",meaning:"苦労しても功績がない"}],
+       confuse:[{word:"开花结果",pinyin:"kāi huā jiē guǒ",meaning:"「春华秋实」は季節の自然な流れと努力の積み重ねの詩的表現、「开花结果」はより直接的に物事が発展して成果が出ることを指す。"}]},
+      {word:"枯木逢春",pinyin:"kū mù féng chūn",meaning:"枯れ木が春に逢う。絶望的な状況から再び生気・希望が蘇ること。",
+       origin:"宋・释道原『景徳伝燈録』などに見られる禅語的表現。冬枯れて死んだように見えた木が春になって再び芽吹く自然現象から、人が逆境から立ち直ったり、物事が復活することを表す。",
+       example:{zh:"他的事业在低谷时期得到贵人相助，枯木逢春，重新焕发了生机。",pinyin:"Tā de shìyè zài dīgǔ shíqī dédào guìrén xiāngzhù, kū mù féng chūn, chóngxīn huànfāle shēngjī.",ja:"事業の低迷期に貴人の助けを得て、枯木逢春のように再び生気を取り戻した。"},
+       synonyms:[{word:"起死回生",pinyin:"qǐ sǐ huí shēng",meaning:"死から生へ戻る（奇跡的な回復）"}],
+       antonyms:[{word:"江河日下",pinyin:"jiāng hé rì xià",meaning:"川が日ごとに流れ落ちる（衰退）"}],
+       confuse:[{word:"否极泰来",pinyin:"pǐ jí tài lái",meaning:"「枯木逢春」は生命・生気の復活を強調、「否极泰来」は悪い状況が極まって好転するという運勢の変化を強調。"}]}
+    ]
+  },
+  {
+    id:"wisdom5", name:"💡 知恵・判断", color:"#c0392b",
+    words:[
+      {word:"见微知著",pinyin:"jiàn wēi zhī zhù",meaning:"微を見て著を知る。小さな兆候から大きな事態を見抜くこと。",
+       origin:"出典：『韓非子・説林上』。小さな事象から重大なことを推察する洞察力・観察力を表す。「見微知著」は賢者の能力として古代より称賛されてきた。",
+       example:{zh:"优秀的投资者能见微知著，从细节变化中发现市场趋势。",pinyin:"Yōuxiù de tóuzī zhě néng jiàn wēi zhī zhù, cóng xìjié biànhuà zhōng fāxiàn shìchǎng qūshì.",ja:"優れた投資家は見微知著ができ、細部の変化から市場トレンドを見つけ出す。"},
+       synonyms:[{word:"明察秋毫",pinyin:"míng chá qiū háo",meaning:"秋の獣毛の先まで明確に見る（鋭い洞察）"}],
+       antonyms:[{word:"以偏概全",pinyin:"yǐ piān gài quán",meaning:"部分で全体を概括する（一面的判断）"}],
+       confuse:[{word:"一叶知秋",pinyin:"yī yè zhī qiū",meaning:"「见微知著」は小事から大事を推察する論理的洞察、「一叶知秋」は一葉が落ちて秋を知る（象徴的な兆しから全体を察する）。"}]},
+      {word:"深谋远虑",pinyin:"shēn móu yuǎn lǜ",meaning:"深く謀り遠くを慮る。深く考え、遠い将来を見据えて計画すること。",
+       origin:"出典：漢・賈誼「過秦論」。「深謀遠慮、行軍用兵之道」という表現に由来。目先の利益にとらわれず長期的な視野に立って物事を考え計画することを表す。",
+       example:{zh:"这位企业家深谋远虑，早在十年前就布局了海外市场，如今收获颇丰。",pinyin:"Zhè wèi qǐyèjiā shēn móu yuǎn lǜ, zǎo zài shí nián qián jiù bùjúle hǎiwài shìchǎng, rújīn shōuhuò pō fēng.",ja:"この実業家は深謀遠慮で、十年前からすでに海外市場を布石し、今は豊かな実りを得ている。"},
+       synonyms:[{word:"高瞻远瞩",pinyin:"gāo zhān yuǎn zhǔ",meaning:"高く見て遠くを望む（先見性がある）"}],
+       antonyms:[{word:"鼠目寸光",pinyin:"shǔ mù cùn guāng",meaning:"ねずみの目は一寸先しか見えない（短視眼的）"}],
+       confuse:[{word:"未雨绸缪",pinyin:"wèi yǔ chóu móu",meaning:"「深谋远虑」は長期的・戦略的な思考全般を指す、「未雨绸缪」は雨が降る前に備えるという具体的な事前準備の行動。"}]},
+      {word:"当局者迷",pinyin:"dāng jú zhě mí",meaning:"当事者は迷う。当事者は物事を客観的に見られないこと。",
+       origin:"出典：宋・辛棄疾「恨別賦」などに関連。「当局者迷、旁観者清」（当事者は迷い、第三者には明確に見える）という対句として用いられることが多い。",
+       example:{zh:"当局者迷，你自己看不清楚，让我帮你分析一下这段感情关系吧。",pinyin:"Dāng jú zhě mí, nǐ zìjǐ kàn bù qīngchǔ, ràng wǒ bāng nǐ fēnxī yīxià zhè duàn gǎnqíng guānxi ba.",ja:"当局者迷というから、あなた自身では見えていないだろう。この恋愛関係を一緒に分析してみよう。"},
+       synonyms:[{word:"旁观者清",pinyin:"páng guān zhě qīng",meaning:"第三者には物事が明確に見える（対義語でもある）"}],
+       antonyms:[{word:"旁观者清",pinyin:"páng guān zhě qīng",meaning:"傍観者は清く見える（当局者迷の対句）"}],
+       confuse:[{word:"利令智昏",pinyin:"lì lìng zhì hūn",meaning:"「当局者迷」は当事者という立場・関与から生まれる判断の歪み、「利令智昏」は利益への欲から理性が失われること。"}]},
+      {word:"举一反三",pinyin:"jǔ yī fǎn sān",meaning:"一を挙げて三に反る。一つから多くを類推できること。",
+       origin:"出典：『論語・述而篇』。「不憤不啓、不悱不発、挙一隅不以三隅反則不復也」という孔子の言葉に由来。一つの例から多くを推論する応用力・理解力の高さを示す。",
+       example:{zh:"好学生不仅会解这道题，还能举一反三，把类似的题都做出来。",pinyin:"Hǎo xuésheng bùjǐn huì jiě zhè dào tí, hái néng jǔ yī fǎn sān, bǎ lèisì de tí dōu zuò chūlái.",ja:"優秀な学生はこの問題を解けるだけでなく、举一反三で類似の問題もすべて解けるようになる。"},
+       synonyms:[{word:"触类旁通",pinyin:"chù lèi páng tōng",meaning:"一事から類推して他に通ずる"}],
+       antonyms:[{word:"死记硬背",pinyin:"sǐ jì yìng bèi",meaning:"機械的に丸暗記する"}],
+       confuse:[{word:"融会贯通",pinyin:"róng huì guàn tōng",meaning:"「举一反三」は一つの例から多くに応用できる推論力、「融会贯通」は異なる知識が融合して深い理解に達すること。"}]},
+      {word:"瞻前顾后",pinyin:"zhān qián gù hòu",meaning:"前を望み後を顧みる。あれこれ考えすぎて決断できない様子。",
+       origin:"出典：屈原「離騒」。「瞻前而顧後兮、相觀民之計極」という表現に由来。前後を見渡すことで慎重さを表す場合もあるが、現代では多くの場合、優柔不断・決断力のなさを批判的に描写する。",
+       example:{zh:"做决策时，他总是瞻前顾后，患得患失，错过了很多好机会。",pinyin:"Zuò juécè shí, tā zǒngshì zhān qián gù hòu, huàn dé huàn shī, cuòguòle hěn duō hǎo jīhuì.",ja:"意思決定の際、彼はいつも瞻前顾后で得失を恐れるあまり、多くの好機を逃してしまった。"},
+       synonyms:[{word:"优柔寡断",pinyin:"yōu róu guǎ duàn",meaning:"優柔で決断が少ない（優柔不断）"}],
+       antonyms:[{word:"当机立断",pinyin:"dāng jī lì duàn",meaning:"機に当たって即座に決断する"}],
+       confuse:[{word:"三思而后行",pinyin:"sān sī ér hòu xíng",meaning:"「瞻前顾后」は過度な心配・躊躇のため行動できないこと（否定的）、「三思而后行」は慎重に考えてから行動すること（肯定的）。"}]},
+      {word:"因地制宜",pinyin:"yīn dì zhì yí",meaning:"地に因って宜しきを制する。土地・条件に応じた適切な方法をとること。",
+       origin:"出典：『呂氏春秋・審時篇』。「因地制宜」という表現が見られる。農業・軍事・行政などの分野で、画一的な方法を避け、それぞれの土地の条件に合わせた対応をすることを強調する。",
+       example:{zh:"发展经济要因地制宜，不能照搬其他地区的经验，要根据当地实际情况制定政策。",pinyin:"Fāzhǎn jīngjì yào yīn dì zhì yí, bùnéng zhàobān qítā dìqū de jīngyàn, yào gēnjù dāngdì shíjì qíngkuàng zhìdìng zhèngcè.",ja:"経済発展には因地制宜が必要で、他地域の経験を丸写しせず、地元の実情に基づいて政策を立案すべきだ。"},
+       synonyms:[{word:"因势利导",pinyin:"yīn shì lì dǎo",meaning:"状況の流れを利用して有利に導く"}],
+       antonyms:[{word:"一刀切",pinyin:"yī dāo qiē",meaning:"一律に切る（画一的な対応）"}],
+       confuse:[{word:"随机应变",pinyin:"suí jī yìng biàn",meaning:"「因地制宜」は場所・条件に応じた方法の選択、「随机应变」は状況の変化に即座に柔軟に対応すること。"}]},
+      {word:"明哲保身",pinyin:"míng zhé bǎo shēn",meaning:"賢明であることが身を保つ。賢者は危険を避けて身を守ること。",
+       origin:"出典：『詩経・大雅・烝民』。「既明且哲、以保其身」という表現に由来。本来は賢者の正しい行いを指したが、現代では保身のために問題から距離を置くことへの批判的な意味合いで使われることも多い。",
+       example:{zh:"在政治敏感时期，他选择明哲保身，不发表任何意见，安然度过了那段时期。",pinyin:"Zài zhèngzhì mǐngǎn shíqī, tā xuǎnzé míng zhé bǎo shēn, bù fābiǎo rènhé yìjiàn, ānrán dùguòle nà duàn shíqī.",ja:"政治的に敏感な時期に、彼は明哲保身を選び何も意見を述べず、その時期を無事に乗り越えた。"},
+       synonyms:[{word:"韬光养晦",pinyin:"tāo guāng yǎng huì",meaning:"才能を隠して時機を待つ"}],
+       antonyms:[{word:"挺身而出",pinyin:"tǐng shēn ér chū",meaning:"身を挺して前に出る"}],
+       confuse:[{word:"韬光养晦",pinyin:"tāo guāng yǎng huì",meaning:"「明哲保身」は危険を避けて安全を保つこと、「韬光养晦」は才能・力を意図的に隠して将来の機会を待つ戦略的姿勢。"}]},
+      {word:"一针见血",pinyin:"yī zhēn jiàn xuè",meaning:"一刺しで血が出る。的確に核心を突くこと。",
+       origin:"「一針」は一回の針刺し、「見血」は血が出ること。医療の針が正確に急所に当たって即座に効果が出るイメージから、言葉や批評が正確に問題の核心を突くことを表す。",
+       example:{zh:"他的批评一针见血，直接指出了方案中最核心的问题，让大家都哑口无言。",pinyin:"Tā de pīpíng yī zhēn jiàn xuè, zhíjiē zhǐchūle fāng'àn zhōng zuì héxīn de wèntí, ràng dàjiā dōu yǎkǒu wúyán.",ja:"彼の批評は一針見血で、計画の最も核心的な問題を直接指摘し、誰もが黙り込んだ。"},
+       synonyms:[{word:"切中要害",pinyin:"qiē zhòng yào hài",meaning:"急所を切り当てる（核心を突く）"}],
+       antonyms:[{word:"隔靴搔痒",pinyin:"gé xuē sāo yǎng",meaning:"靴の上から痒いところを掻く（核心に触れない）"}],
+       confuse:[{word:"入木三分",pinyin:"rù mù sān fēn",meaning:"「一针见血」は発言・批評が核心を的確に突くこと、「入木三分」は王羲之の書道の故事から、観察や描写が非常に深くて鋭いこと。"}]},
+      {word:"防微杜渐",pinyin:"fáng wēi dù jiàn",meaning:"微小なうちに防ぎ、漸進を杜ぐ。悪い兆しが小さいうちに対処すること。",
+       origin:"出典：『後漢書・丁鴻伝』。「聖人不治已病治未病、不治已乱治未乱」という思想に基づく。小さな問題が大きくなる前に対処することの重要性を説く予防的な思考。",
+       example:{zh:"企业管理要防微杜渐，小问题如不及时处理，往往会演变成大危机。",pinyin:"Qǐyè guǎnlǐ yào fáng wēi dù jiàn, xiǎo wèntí rú bù jíshí chǔlǐ, wǎngwǎng huì yǎnbiàn chéng dà wēijī.",ja:"企業管理は防微杜漸が必要で、小さな問題を適時処理しなければ大きな危機に発展することが多い。"},
+       synonyms:[{word:"未雨绸缪",pinyin:"wèi yǔ chóu móu",meaning:"雨の前に備えを整える"}],
+       antonyms:[{word:"亡羊补牢",pinyin:"wáng yáng bǔ láo",meaning:"羊を失ってから囲いを修理する（後の祭り）"}],
+       confuse:[{word:"防患于未然",pinyin:"fáng huàn yú wèi rán",meaning:"「防微杜渐」は小さな兆しを見逃さず早期対処すること、「防患于未然」はより広く潜在的な問題・災害を発生前に防ぐこと。"}]},
+      {word:"随机应变",pinyin:"suí jī yìng biàn",meaning:"機に随って変化に応じる。状況の変化に臨機応変に対処すること。",
+       origin:"出典：唐・魏徴「隋書序論」。「随機応変」は古来より軍事・外交・処世術の基本として重視された。固定観念にとらわれず、状況に応じて最適な判断・行動ができることを指す。",
+       example:{zh:"经验丰富的谈判者能随机应变，灵活调整策略以应对各种突发情况。",pinyin:"Jīngyàn fēngfù de tánpàn zhě néng suí jī yìng biàn, línghuó tiáozhěng cèlüè yǐ yìngduì gè zhǒng tūfā qíngkuàng.",ja:"経験豊富な交渉者は随機応変で、様々な突発状況に対応してフレキシブルに戦略を調整できる。"},
+       synonyms:[{word:"见机行事",pinyin:"jiàn jī xíng shì",meaning:"機を見て行動する"}],
+       antonyms:[{word:"一成不变",pinyin:"yī chéng bù biàn",meaning:"全く変わらない（固定的）"}],
+       confuse:[{word:"临机处置",pinyin:"lín jī chǔzhì",meaning:"「随机应变」は柔軟に変化に対応する能力・姿勢全般、「临机处置」は現場でその場の判断で処理することを指す。"}]}
+    ]
+  },
+  {
+    id:"virtue5", name:"🌸 品格・徳行", color:"#7b5ea7",
+    words:[
+      {word:"坚忍不拔",pinyin:"jiān rěn bù bá",meaning:"堅忍して抜けない。意志が固く、困難にも動じないこと。",
+       origin:"出典：宋・蘇軾「晁錯論」。「古之立大事者、不惟有超世之才、亦必有堅忍不抜之志」という有名な文章に由来。困難な状況でも意志を曲げず粘り強く前進する精神力を表す。",
+       example:{zh:"她凭借坚忍不拔的意志，历经十年终于完成了这部学术巨著。",pinyin:"Tā píngjiè jiān rěn bù bá de yìzhì, lìjīng shí nián zhōngyú wánchéngle zhè bù xuéshù jùzhù.",ja:"彼女は堅忍不拔の意志によって十年を経てついにこの学術的大著を完成させた。"},
+       synonyms:[{word:"百折不挠",pinyin:"bǎi zhé bù náo",meaning:"百度折れても挫けない"}],
+       antonyms:[{word:"半途而废",pinyin:"bàn tú ér fèi",meaning:"途中で諦める"}],
+       confuse:[{word:"锲而不舍",pinyin:"qiè ér bù shě",meaning:"「坚忍不拔」は意志の強固さ・不動性を強調、「锲而不舍」は彫り続けてやめないという継続的努力の行為を強調。"}]},
+      {word:"廉洁奉公",pinyin:"lián jié fèng gōng",meaning:"清廉潔白で公に奉じる。清廉で公正に職務を遂行すること。",
+       origin:"「廉洁」は清廉潔白で不正を働かないこと、「奉公」は公のために尽くすこと。中国の官吏道徳の理想として古来より重んじられてきた概念。儒家の道徳観と行政倫理が結びついた表現。",
+       example:{zh:"他担任官员多年，始终廉洁奉公，从未利用职权谋取私利，深受百姓爱戴。",pinyin:"Tā dānrèn guānyuán duō nián, shǐzhōng lián jié fèng gōng, cóngyì lìyòng zhíquán móuqǔ sīlì, shēn shòu bǎixìng àidài.",ja:"彼は長年官吏を務め、一貫して廉洁奉公で職権を私利のために使ったことがなく、民衆から深く慕われた。"},
+       synonyms:[{word:"清正廉洁",pinyin:"qīng zhèng lián jié",meaning:"清正で廉潔"}],
+       antonyms:[{word:"贪赃枉法",pinyin:"tān zāng wǎng fǎ",meaning:"賄賂をとって法を曲げる"}],
+       confuse:[{word:"克己奉公",pinyin:"kè jǐ fèng gōng",meaning:"「廉洁奉公」は不正を働かないことを強調、「克己奉公」は私欲を抑制して公のために尽くすという自己犠牲の側面を強調。"}]},
+      {word:"知恩图报",pinyin:"zhī ēn tú bào",meaning:"恩を知って報いようとする。受けた恩義に感謝し、恩返しをしようとすること。",
+       origin:"儒家の恩義・報恩の思想に基づく。「知恩」は受けた恩を認識すること、「図報」は恩返しを図ること。感謝の心と報恩の行動の両方を含む徳目として重んじられてきた。",
+       example:{zh:"他知恩图报，当年师傅的帮助让他事业有成，如今他也积极扶持后辈。",pinyin:"Tā zhī ēn tú bào, dāngnián shīfu de bāngzhù ràng tā shìyè yǒuchéng, rújīn tā yě jījí fúchí hòubèi.",ja:"彼は知恩图报で、かつての師匠の支援が事業の成功につながった恩を返すために、今は後輩を積極的に支援している。"},
+       synonyms:[{word:"感恩戴德",pinyin:"gǎn ēn dài dé",meaning:"恩徳を感謝して頂く"}],
+       antonyms:[{word:"忘恩负义",pinyin:"wàng ēn fù yì",meaning:"恩を忘れて義に背く"}],
+       confuse:[{word:"投桃报李",pinyin:"tóu táo bào lǐ",meaning:"「知恩图报」は恩義を認識して返そうとする心・行動全般、「投桃报李」は桃を投げ李を返すという具体的な互恵・返礼の行為。"}]},
+      {word:"宁死不屈",pinyin:"nìng sǐ bù qū",meaning:"死んでも屈しない。どんな状況でも自分の信念を曲げないこと。",
+       origin:"中国の歴史上、多くの志士・英雄が敵の前で示した気概を表す言葉として伝えられてきた。特に民族・国家の危機において個人の信念を貫く精神力の象徴として使われる。",
+       example:{zh:"这位革命先烈宁死不屈，面对敌人的严刑拷打，始终没有透露同伴的下落。",pinyin:"Zhè wèi gémìng xiānliè nìng sǐ bù qū, miànduì dírén de yánxíng kǎodǎ, shǐzhōng méiyǒu tòulù tóngbàn de xiàluò.",ja:"この革命烈士は宁死不屈で、敵の厳しい拷問に対しても仲間の行方を最後まで明かさなかった。"},
+       synonyms:[{word:"宁折不弯",pinyin:"nìng zhé bù wān",meaning:"折れることはあっても曲がらない"}],
+       antonyms:[{word:"卑躬屈膝",pinyin:"bēi gōng qū xī",meaning:"身をかがめて膝を屈する（卑屈に服従）"}],
+       confuse:[{word:"坚贞不渝",pinyin:"jiān zhēn bù yú",meaning:"「宁死不屈」は死という極限状況での信念の堅持、「坚贞不渝」は信念・愛情・立場が変わらないことを広く表す。"}]},
+      {word:"诚实守信",pinyin:"chéng shí shǒu xìn",meaning:"誠実で信義を守る。正直で約束を守ること。",
+       origin:"儒家の五常（仁・義・礼・智・信）のうち「信」を具体的に実践することを表す。「诚实」は偽りのない正直さ、「守信」は約束・信義を守ること。個人道徳から商業倫理まで広く使われる。",
+       example:{zh:"做生意最重要的是诚实守信，只有这样才能建立长久的商业关系。",pinyin:"Zuò shēngyi zuì zhòngào de shì chéng shí shǒu xìn, zhǐyǒu zhèyàng cái néng jiànlì chángjiǔ de shāngyè guānxi.",ja:"商売で最も重要なのは诚实守信で、そうしてこそ長続きするビジネス関係を築ける。"},
+       synonyms:[{word:"言而有信",pinyin:"yán ér yǒu xìn",meaning:"言葉に信がある（約束を守る）"}],
+       antonyms:[{word:"口是心非",pinyin:"kǒu shì xīn fēi",meaning:"口では賛成し心では反対（偽る）"}],
+       confuse:[{word:"言行一致",pinyin:"yán xíng yī zhì",meaning:"「诚实守信」は誠実さと信義を守ることの徳目、「言行一致」は言葉と行動が矛盾しないという具体的な状態。"}]},
+      {word:"谦虚谨慎",pinyin:"qiān xū jǐn shèn",meaning:"謙虚で慎重である。自分を低く保ち、物事に対して慎重であること。",
+       origin:"中国の道徳・処世哲学において、才能や成功があっても傲慢にならず、謙虚で慎重な姿勢を保つことが理想とされた。老子の「知足者富」や儒家の「慎独」の思想が背景にある。",
+       example:{zh:"他虽然成就卓著，但始终谦虚谨慎，从不以功劳自居，深受同事尊重。",pinyin:"Tā suīrán chéngjiù zhuózhù, dàn shǐzhōng qiānxū jǐnshèn, cóng bù yǐ gōngláo zìjū, shēn shòu tóngshì zūnzhòng.",ja:"彼は卓越した業績があるにもかかわらず、一貫して謙虚で慎重であり、自分の功績をひけらかすことなく、同僚から深く尊敬されている。"},
+       synonyms:[{word:"虚怀若谷",pinyin:"xū huái ruò gǔ",meaning:"谷のように広い胸懐を持つ（謙虚）"}],
+       antonyms:[{word:"骄傲自满",pinyin:"jiāo ào zì mǎn",meaning:"驕慢で自己満足"}],
+       confuse:[{word:"不骄不躁",pinyin:"bù jiāo bù zào",meaning:"「谦虚谨慎」は謙虚さと慎重さの両面を強調、「不骄不躁」は骄りも焦りもない平静・安定した心の状態を表す。"}]},
+      {word:"克己复礼",pinyin:"kè jǐ fù lǐ",meaning:"己に克って礼に復る。私欲を抑えて礼儀・規範を守ること。",
+       origin:"出典：『論語・顔淵篇』。顔淵が「仁」について問い、孔子が「克己復礼為仁」（己に克って礼に復ることが仁である）と答えたことに由来。儒家思想の核心を成す倫理的実践の原則。",
+       example:{zh:"他用克己复礼的精神要求自己，时刻保持对礼仪规范的尊重，成为了团队的榜样。",pinyin:"Tā yòng kè jǐ fù lǐ de jīngshén yāoqiú zìjǐ, shíkè bǎochí duì lǐyí guīfàn de zūnzhòng, chéngwéile tuánduì de bǎngyàng.",ja:"彼は克己復礼の精神で自分を律し、常に礼儀規範への尊重を保ち、チームの手本となった。"},
+       synonyms:[{word:"恪尽职守",pinyin:"kè jìn zhí shǒu",meaning:"職責を慎重に守り尽くす"}],
+       antonyms:[{word:"放纵自我",pinyin:"fàng zòng zì wǒ",meaning:"自分を放縦にする（自制しない）"}],
+       confuse:[{word:"克制自律",pinyin:"kèzhì zìlǜ",meaning:"「克己复礼」は自己抑制と礼の回復という儒家倫理の特定の実践原理、「克制自律」は自己制御と自律の一般的な行為。"}]},
+      {word:"以身作则",pinyin:"yǐ shēn zuò zé",meaning:"身をもって模範を示す。自らが模範となって周囲に示すこと。",
+       origin:"出典：唐代の文献などに用例がある。「以身」は自分の行動をもって、「作則」は模範・規則を作ることを意味する。リーダー・上位者が言葉でなく行動で示すことの重要性を表す。",
+       example:{zh:"领导者要以身作则，自己做到了才有资格要求下属去做。",pinyin:"Lǐngdǎo zhě yào yǐ shēn zuò zé, zìjǐ zuòdào le cái yǒu zīgé yāoqiú xiàshǔ qù zuò.",ja:"リーダーは以身作則で、自ら実践してこそ部下に求める資格が生まれる。"},
+       synonyms:[{word:"身先士卒",pinyin:"shēn xiān shì zú",meaning:"身を先んじて兵卒の前に出る（率先垂範）"}],
+       antonyms:[{word:"言行不一",pinyin:"yán xíng bù yī",meaning:"言葉と行動が一致しない"}],
+       confuse:[{word:"率先垂范",pinyin:"shuài xiān chuí fàn",meaning:"「以身作则」は身をもって規範・模範を示すこと全般、「率先垂范」は先頭に立って模範を垂れることで、リーダーシップの積極性を強調。"}]},
+      {word:"持之以恒",pinyin:"chí zhī yǐ héng",meaning:"恒心を持って続ける。恒心を持って最後まであきらめずに物事を続けること。",
+       origin:"清・曾国藩の言葉に多く見られる表現。「恒」は変わらぬ心・継続性を意味する。学習・修行・事業において、途中で諦めず継続することの重要性を説く格言として広く使われる。",
+       example:{zh:"学好中文没有捷径，只有持之以恒地坚持练习，才能达到流利的水平。",pinyin:"Xué hǎo Zhōngwén méiyǒu jiéjìng, zhǐyǒu chí zhī yǐ héng de jiānchí liànxí, cái néng dádào liúlì de shuǐpíng.",ja:"中国語をマスターするのに近道はなく、持之以恒で練習を続けることでのみ流暢なレベルに達せる。"},
+       synonyms:[{word:"坚持不懈",pinyin:"jiānchí bù xiè",meaning:"たゆまず継続する"}],
+       antonyms:[{word:"三天打鱼两天晒网",pinyin:"sān tiān dǎ yú liǎng tiān shài wǎng",meaning:"三日漁をして二日網を干す（継続しない）"}],
+       confuse:[{word:"锲而不舍",pinyin:"qiè ér bù shě",meaning:"「持之以恒」は恒心を持って継続することを強調、「锲而不舍」は荀子の言葉で彫り続けるイメージから粘り強く止めないことを強調。"}]},
+      {word:"洁身自好",pinyin:"jié shēn zì hào",meaning:"身を清くして自らを大切にする。清廉な行いを保ち、悪い環境に染まらないこと。",
+       origin:"出典：『孟子・万章上』。「不得其正而仕、与鄕人処、恂恂如也」などの記述を背景に、自分の品格を守ることの重要性を説く。現代では悪い誘惑に流されず自分の高潔さを保つことを表す。",
+       example:{zh:"身处诱惑丛生的环境，他始终洁身自好，坚持自己的原则，没有同流合污。",pinyin:"Shēn chǔ yòuhuò cóng shēng de huánjìng, tā shǐzhōng jié shēn zì hào, jiānchí zìjǐ de yuánzé, méiyǒu tóng liú hé wū.",ja:"誘惑の多い環境に身を置きながら、彼は一貫して洁身自好で自分の原則を守り、不正に加担しなかった。"},
+       synonyms:[{word:"出淤泥而不染",pinyin:"chū yū ní ér bù rǎn",meaning:"泥の中から出ても汚れない（高潔）"}],
+       antonyms:[{word:"同流合污",pinyin:"tóng liú hé wū",meaning:"汚れた流れと合流して汚れる（不正に加担）"}],
+       confuse:[{word:"明哲保身",pinyin:"míng zhé bǎo shēn",meaning:"「洁身自好」は高潔さ・清廉さを保つことを強調、「明哲保身」は危険・紛争を避けて自身の安全を図ることを強調。"}]}
+    ]
+  },
+  {
+    id:"society5", name:"🏛️ 社会・時勢", color:"#c9962a",
+    words:[
+      {word:"百废待兴",pinyin:"bǎi fèi dài xīng",meaning:"百の廃れたことが興起を待っている。多くの分野が荒廃して再建を待っている状態。",
+       origin:"宋・范仲淹「岳陽楼記」。「越明年、政通人和、百廃具興」（翌年、政治が通じ民心が和らぎ、廃れたものがすべて復興した）という表現に由来。戦後や混乱期の後に再建・復興が必要な状態を指す。",
+       example:{zh:"战后百废待兴，政府需要制定全面的重建计划，恢复经济和社会秩序。",pinyin:"Zhànhòu bǎi fèi dài xīng, zhèngfǔ xūyào zhìdìng quánmiàn de chóngjiàn jìhuà, huīfù jīngjì hé shèhuì zhìxù.",ja:"戦後、百废待兴の状態で、政府は全面的な再建計画を策定して経済と社会秩序を回復する必要があった。"},
+       synonyms:[{word:"满目疮痍",pinyin:"mǎn mù chuāng yí",meaning:"目の届く限り傷だらけ（荒廃した状態）"}],
+       antonyms:[{word:"繁荣昌盛",pinyin:"fánróng chāngshèng",meaning:"繁栄して栄えている"}],
+       confuse:[{word:"百业萧条",pinyin:"bǎi yè xiāotiáo",meaning:"「百废待兴」は廃れていることと復興への期待を含む表現、「百业萧条」は各業界が不振で活気がない状態のみを指す。"}]},
+      {word:"民心所向",pinyin:"mín xīn suǒ xiàng",meaning:"民心の向かうところ。民衆の心が向いている方向・民意。",
+       origin:"「民心」は民衆の心・意向、「所向」は向かっている方向。民衆の支持・意志を表す政治的・歴史的な表現として使われてきた。「民心所向、大势所趋」という形で使われることも多い。",
+       example:{zh:"这项改革政策民心所向，得到了广大民众的热烈支持。",pinyin:"Zhè xiàng gǎigé zhèngcè mín xīn suǒ xiàng, dédàole guǎngdà mínzhòng de rèliè zhīchí.",ja:"この改革政策は民心所向で、広く民衆の熱烈な支持を得た。"},
+       synonyms:[{word:"众望所归",pinyin:"zhòng wàng suǒ guī",meaning:"衆望の帰するところ（民衆の期待を受ける）"}],
+       antonyms:[{word:"众叛亲离",pinyin:"zhòng pàn qīn lí",meaning:"多くが背き親も離れる（孤立）"}],
+       confuse:[{word:"大势所趋",pinyin:"dà shì suǒ qū",meaning:"「民心所向」は民衆の心・意志の向かうところを強調、「大势所趋」は時代・状況の大きな流れ・趨勢を強調。"}]},
+      {word:"欣欣向荣",pinyin:"xīn xīn xiàng róng",meaning:"生き生きと栄えていく。物事が活気に満ちて盛んになっていく様子。",
+       origin:"出典：晋・陶淵明「帰去来辞」。「木欣欣以向榮、泉涓涓而始流」という詩句に由来。植物が生き生きと茂るイメージから、社会・事業・組織などが元気に発展していく様子を表す。",
+       example:{zh:"改革开放以来，中国经济欣欣向荣，人民生活水平大幅提高。",pinyin:"Gǎigé kāifàng yǐlái, Zhōngguó jīngjì xīn xīn xiàng róng, rénmín shēnghuó shuǐpíng dàfú tígāo.",ja:"改革開放以来、中国経済は欣欣向荣として、人民の生活水準が大幅に向上した。"},
+       synonyms:[{word:"蒸蒸日上",pinyin:"zhēng zhēng rì shàng",meaning:"日ごとに蒸気が上がるように盛んになる"}],
+       antonyms:[{word:"每况愈下",pinyin:"měi kuàng yù xià",meaning:"状況がますます悪くなる"}],
+       confuse:[{word:"方兴未艾",pinyin:"fāng xīng wèi ài",meaning:"「欣欣向荣」は全体的な活気・繁栄の状態を描写、「方兴未艾」は物事が発展途中でまだ勢いが止まないことを強調。"}]},
+      {word:"安居乐业",pinyin:"ān jū lè yè",meaning:"安らかに居を定め、楽しみながら仕事をする。生活が安定し、仕事に満足していること。",
+       origin:"出典：『漢書・貨殖伝』。「各安其居而楽其業、甘其食而美其服」という表現に由来。平和で安定した社会の理想像を表す。現代では社会が安定して国民が幸福に暮らせる状態を示す政治的理想としても使われる。",
+       example:{zh:"经过多年的发展建设，这个小城镇的居民终于过上了安居乐业的幸福生活。",pinyin:"Jīngguò duō nián de fāzhǎn jiànshè, zhège xiǎo chéngzhèn de jūmín zhōngyú guòshàngle ān jū lè yè de xìngfú shēnghuó.",ja:"長年の発展と建設を経て、この小さな町の住民はついに安居乐业の幸福な生活を送れるようになった。"},
+       synonyms:[{word:"丰衣足食",pinyin:"fēng yī zú shí",meaning:"衣食が豊かで足りている"}],
+       antonyms:[{word:"流离失所",pinyin:"liú lí shī suǒ",meaning:"転々として居所を失う（難民状態）"}],
+       confuse:[{word:"国泰民安",pinyin:"guó tài mín ān",meaning:"「安居乐业」は個人・家庭レベルの安定した生活を強調、「国泰民安」は国家全体の平和と民衆の安定を表す。"}]},
+      {word:"众志成城",pinyin:"zhòng zhì chéng chéng",meaning:"衆の志が城を成す。皆が心を合わせれば堅固な城ができる。力を合わせれば困難を乗り越えられること。",
+       origin:"出典：『国語・周語下』。「衆心成城、衆口鑠金」（衆の心は城を成し、衆の口は金を溶かす）という表現に由来。集団の力・団結の強さを表す格言として使われる。",
+       example:{zh:"面对突如其来的自然灾害，全国人民众志成城，共同抗灾救灾。",pinyin:"Miànduì tūrú qílái de zìrán zāihài, quánguó rénmín zhòng zhì chéng chéng, gòngtóng kàngzāi jiùzāi.",ja:"突発的な自然災害に直面して、全国民が众志成城で共に災害に立ち向かい被災者を救援した。"},
+       synonyms:[{word:"齐心协力",pinyin:"qí xīn xié lì",meaning:"心を揃えて力を合わせる"}],
+       antonyms:[{word:"一盘散沙",pinyin:"yī pán sǎn shā",meaning:"一皿の砂（まとまりのない状態）"}],
+       confuse:[{word:"同心协力",pinyin:"tóng xīn xié lì",meaning:"「众志成城」は多くの人の意志が結集して堅固な力になることを強調、「同心协力」は心を同じくして力を合わせる協力の行為を強調。"}]},
+      {word:"前车之鉴",pinyin:"qián chē zhī jiàn",meaning:"前の車の轍が鑑。先人の失敗を教訓にすること。",
+       origin:"出典：『荀子・成相篇』。「前車覆、後車誡」（前の車が転覆したら後の車は戒めとすべき）という表現に由来。他人や過去の失敗・誤りから学ぶことの重要性を表す。",
+       example:{zh:"这次失败要成为前车之鉴，让我们认真反思，避免在同样的地方再次跌倒。",pinyin:"Zhè cì shībài yào chéngwéi qián chē zhī jiàn, ràng wǒmen rènzhēn fǎnsī, bìmiǎn zài tóngyàng de dìfāng zàicì diédǎo.",ja:"今回の失敗を前車之鑑として、真剣に反省し、同じ場所で再び躓かないようにすべきだ。"},
+       synonyms:[{word:"殷鉴不远",pinyin:"yīn jiàn bù yuǎn",meaning:"殷の鑑は遠くにない（身近な教訓）"}],
+       antonyms:[{word:"不知前车之鉴",pinyin:"bù zhī qián chē zhī jiàn",meaning:"過去の失敗から学ばない"}],
+       confuse:[{word:"以史为鉴",pinyin:"yǐ shǐ wéi jiàn",meaning:"「前车之鉴」は直近の・具体的な失敗・教訓、「以史为鉴」は歴史全般を鑑として学ぶことを強調。"}]},
+      {word:"力挽狂澜",pinyin:"lì wǎn kuáng lán",meaning:"力で狂った波を引き留める。崩壊しそうな状況を力でくい止めること。",
+       origin:"出典：唐・韓愈「進学解」。「障百川而東之、回狂瀾於既倒」という表現に由来。もはや崩壊・壊滅寸前の状況を、一人の力や英雄的な行動で食い止めることを表す壮大な表現。",
+       example:{zh:"公司在危机中，正是他力挽狂澜，做出了一系列关键决策，使公司重回正轨。",pinyin:"Gōngsī zài wēijī zhōng, zhèng shì tā lì wǎn kuáng lán, zuòchūle yī xìliè guānjiàn juécè, shǐ gōngsī chóng huí zhèng guǐ.",ja:"会社が危機にある中、まさに彼が力挽狂澜として一連の重要な決断を下し、会社を軌道に戻した。"},
+       synonyms:[{word:"转危为安",pinyin:"zhuǎn wēi wéi ān",meaning:"危険を安全に転換させる"}],
+       antonyms:[{word:"无力回天",pinyin:"wú lì huí tiān",meaning:"天を回らす力もない（手の施しようがない）"}],
+       confuse:[{word:"临危不惧",pinyin:"lín wēi bù jù",meaning:"「力挽狂澜」は危機的状況を積極的に食い止める行動力、「临危不惧」は危機に臨んでも恐れない精神的な態度。"}]},
+      {word:"鱼龙混杂",pinyin:"yú lóng hùn zá",meaning:"魚と龍が混じり合う。善悪・優劣がごちゃ混ぜになっている状態。",
+       origin:"魚と龍を対比させた表現で、価値の異なるものが一緒に混在する様子を表す。特に人の集まりや組織などにおいて、優れた人物と劣った人物、誠実な人と悪意ある人が混在していることを指す。",
+       example:{zh:"网络上鱼龙混杂，各种信息良莠不齐，要学会辨别真假。",pinyin:"Wǎngluò shàng yú lóng hùn zá, gè zhǒng xìnxī liáng yòu bù qí, yào xuéhuì biànbié zhēn jiǎ.",ja:"インターネット上は鱼龙混杂で様々な情報の質がバラバラで、真偽を見分けることを学ぶべきだ。"},
+       synonyms:[{word:"良莠不齐",pinyin:"liáng yòu bù qí",meaning:"良いものと粗末なものが入り混じる"}],
+       antonyms:[{word:"泾渭分明",pinyin:"jīng wèi fēn míng",meaning:"泾水と渭水のように明確に区別できる"}],
+       confuse:[{word:"泥沙俱下",pinyin:"ní shā jù xià",meaning:"「鱼龙混杂」は善悪・優劣が混在する状態（人物・情報など）、「泥沙俱下」は泥と砂が一緒に流れる（大きな流れの中で良いものも悪いものも混在）。"}]},
+      {word:"物尽其用",pinyin:"wù jìn qí yòng",meaning:"物がその用を尽くす。あらゆる物をその用途に最大限活用すること。",
+       origin:"「物尽其用、人尽其才」（物はその用を尽くし、人はその才を尽くす）という表現の前半部分。資源・材料の有効活用という実践的・倫理的な観念を表す。無駄を省いて効率的に活用することを重視する中国の伝統的価値観に根ざす。",
+       example:{zh:"建设节约型社会，就要提倡物尽其用，减少浪费，提高资源利用效率。",pinyin:"Jiànshè jiéyuē xíng shèhuì, jiù yào tíchàng wù jìn qí yòng, jiǎnshǎo làngfèi, tígāo zīyuán lìyòng xiàolǜ.",ja:"節約型社会を構築するには、物尽其用を推進し、無駄を減らして資源利用効率を高める必要がある。"},
+       synonyms:[{word:"废物利用",pinyin:"fèiwù lìyòng",meaning:"廃棄物の再利用"}],
+       antonyms:[{word:"暴殄天物",pinyin:"bào tiǎn tiān wù",meaning:"天の与えた物を乱暴に使い尽くす（浪費）"}],
+       confuse:[{word:"人尽其才",pinyin:"rén jìn qí cái",meaning:"「物尽其用」は物・資源の有効活用、「人尽其才」は人材・才能の最大限の活用を指す。二つはセットで用いられることが多い。"}]},
+      {word:"百花齐放",pinyin:"bǎi huā qí fàng",meaning:"百の花が一斉に咲く。様々な芸術・思想・文化が自由に発展すること。",
+       origin:"「百花斉放、百家争鳴」（百の花が咲き、百の学派が議論する）という1956年の中国の文化政策スローガンに由来。元々は文化・学術の多様な発展を促す政策を指したが、現代では様々な表現・見解が共存することを表す。",
+       example:{zh:"当今的文化市场百花齐放，各种风格的艺术形式并存发展，充满活力。",pinyin:"Dāngjīn de wénhuà shìchǎng bǎi huā qí fàng, gè zhǒng fēnggé de yìshù xíngshì bìngcún fāzhǎn, chōngmǎn huólì.",ja:"今日の文化市場は百花斉放で、様々なスタイルの芸術形式が共存・発展し、活気に満ちている。"},
+       synonyms:[{word:"百家争鸣",pinyin:"bǎi jiā zhēng míng",meaning:"百の学派が議論・競争する"}],
+       antonyms:[{word:"一花独放",pinyin:"yī huā dú fàng",meaning:"一つの花だけが咲く（独占・多様性の欠如）"}],
+       confuse:[{word:"万紫千红",pinyin:"wàn zǐ qiān hóng",meaning:"「百花齐放」は文化・思想の多様性と自由な発展を強調、「万紫千红」は色とりどりの花々の美しさを強調する自然・視覚的な表現。"}]}
+    ]
+  }
+];
+
+// ===================== STATE =====================
+let currentThemeId = null;
+let currentDeck = [];
+let currentIdx = 0;
+let isFlipped = false;
+let testType = 'meaning';
+let testDeck = [];
+let testIdx = 0;
+let testCorrect = 0;
+let testAnswered = false;
+let currentMode = 'card';
+let testCurrentWord = null;
+
+const LS_LEARNED = 'hsk6v6_learned';
+const LS_WEAK    = 'hsk6v5_weak';
+function loadSet(key){ try{ return new Set(JSON.parse(localStorage.getItem(key)||'[]')); }catch(e){ return new Set(); } }
+function saveSet(key,s){ try{ localStorage.setItem(key,JSON.stringify([...s])); }catch(e){} }
+let learnedSet = loadSet(LS_LEARNED);
+let weakSet    = loadSet(LS_WEAK);
+
+const allWords = themes.flatMap(t => t.words.map(w => ({...w, themeId:t.id, themeName:t.name})));
+
+// ===================== HOME =====================
+function buildHome() {
+  document.getElementById('homeThemes').innerHTML = themes.map(t => {
+    const lc = t.words.filter(w => learnedSet.has(w.word)).length;
+    return `<div class="theme-card" onclick="openTheme('${t.id}')">
+      <div class="tc-accent"></div>
+      <div class="tc-name">${t.name}</div>
+      <div class="tc-count">${t.words.length} 語　学習済み ${lc}/${t.words.length}</div>
+      <div class="tc-words">${t.words.slice(0,4).map(w=>w.word).join('・')}…</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('indexGrid').innerHTML = allWords.map(w => `
+    <div class="index-row" onclick="openFromIndex('${w.themeId}','${w.word}')">
+      <div class="ir-word">${w.word}</div>
+      <div class="ir-pinyin">${w.pinyin}</div>
+      <div class="ir-theme">${w.themeName}</div>
+      <div class="ir-badges">
+        ${learnedSet.has(w.word)?'<span class="ir-badge">✅</span>':''}
+        ${weakSet.has(w.word)?'<span class="ir-badge">⚠️</span>':''}
+      </div>
+    </div>`).join('');
+
+  const total = allWords.length;
+  const lc = allWords.filter(w=>learnedSet.has(w.word)).length;
+  document.getElementById('psFill').style.width = `${lc/total*100}%`;
+  document.getElementById('psCount').textContent = `${lc} / ${total}`;
+  document.getElementById('psWeakLink').textContent = `⚠️ 苦手 ${weakSet.size}語`;
+  buildWeakList();
+}
+
+function buildWeakList() {
+  const wc = document.getElementById('weakContent');
+  const words = allWords.filter(w => weakSet.has(w.word));
+  if(words.length === 0){
+    wc.innerHTML = `<div class="weak-empty">苦手成語はまだありません。<br>カード画面の ★ ボタンまたはテスト結果から登録できます。</div>`;
+    return;
+  }
+  wc.innerHTML = `<div class="weak-grid">${words.map(w=>`
+    <div class="weak-row" onclick="openFromIndex('${w.themeId}','${w.word}')">
+      <div class="wr-word">${w.word}</div>
+      <div class="wr-pinyin">${w.pinyin}</div>
+      <button class="wr-del" onclick="removeWeak(event,'${w.word}')">✕</button>
+    </div>`).join('')}</div>`;
+}
+
+function removeWeak(e, word){ e.stopPropagation(); weakSet.delete(word); saveSet(LS_WEAK,weakSet); buildHome(); }
+
+function showHomeTab(tab) {
+  document.querySelectorAll('.nav-tab').forEach((b,i)=>{
+    b.classList.toggle('active', ['themes','index','weak'][i]===tab);
+  });
+  document.getElementById('homeThemes').style.display  = tab==='themes'?'grid':'none';
+  document.getElementById('homeIndex').style.display   = tab==='index'?'block':'none';
+  document.getElementById('homeWeak').style.display    = tab==='weak'?'block':'none';
+}
+
+function openTheme(themeId, startWord) {
+  currentThemeId = themeId;
+  const theme = themes.find(t=>t.id===themeId);
+  currentDeck = theme.words;
+  currentIdx  = startWord ? Math.max(0, currentDeck.findIndex(w=>w.word===startWord)) : 0;
+  isFlipped   = false;
+  currentMode = 'card';
+  document.getElementById('cardScreenTitle').textContent = theme.name;
+  document.getElementById('card').classList.remove('flipped');
+  showScreen('cardScreen');
+  renderCard();
+  updateModeBtns();
+}
+function openFromIndex(tid,word){ openTheme(tid,word); }
+function goHome(){ showScreen('homeScreen'); buildHome(); window.speechSynthesis&&window.speechSynthesis.cancel(); }
+function showScreen(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+// ===================== CARD =====================
+function renderCard() {
+  const d   = currentDeck[currentIdx];
+  const no  = allWords.findIndex(w=>w.word===d.word) + 201;
+  const isL = learnedSet.has(d.word);
+  const isW = weakSet.has(d.word);
+
+  document.getElementById('frontChengyu').textContent = d.word;
+  document.getElementById('frontPinyin').textContent  = d.pinyin;
+  document.getElementById('cardBadge').textContent    = `No.${no}`;
+  document.getElementById('backChengyu').textContent  = d.word;
+  document.getElementById('backPinyin').textContent   = d.pinyin;
+  document.getElementById('backMeaning').textContent  = d.meaning;
+
+  const lBtn = document.getElementById('learnedBtn');
+  const wBtn = document.getElementById('weakBtn');
+  lBtn.className = 'card-action-btn' + (isL?' active-learned':'');
+  lBtn.title = isL ? '学習済みを解除' : '学習済みにする';
+  wBtn.className = 'card-action-btn' + (isW?' active-weak':'');
+  wBtn.title = isW ? '苦手から外す' : '苦手に追加';
+
+  const statusRow = document.getElementById('cardStatusRow');
+  statusRow.innerHTML = (isL?'<span class="status-learned">✅ 学習済み</span>':'') + (isW?'<span class="status-weak">⚠️ 苦手</span>':'');
+
+  // Info grid (back)
+  const ig = document.getElementById('infoGrid');
+  let html = '';
+  if(d.example){
+    const hl = d.example.zh.replace(new RegExp(d.word,'g'),`<span class="hl">${d.word}</span>`);
+    html += `<div class="info-card ex-card">
+      <div class="ex-label">例文
+        <button class="mini-speak-btn" style="margin-left:auto;" onclick="speakWord(event,'${d.example.zh.replace(/'/g,"\'")}'" title="例文を読み上げ">🔊</button>
+      </div>
+      <div class="ex-zh">${hl}</div>
+      <div class="ex-py">${d.example.pinyin}</div>
+      <div class="ex-ja">${d.example.ja}</div>
+    </div>`;
+  }
+  if(d.synonyms&&d.synonyms.length){
+    html += `<div class="info-card syn"><div class="info-card-label">類義語</div>${d.synonyms.map(s=>`
+      <div class="info-item">
+        <div class="info-item-header">
+          <span class="info-chinese">${s.word}</span>
+          <span class="info-pinyin">${s.pinyin}</span>
+          <button class="mini-speak-btn" onclick="speakWord(event,'${s.word}')">🔊</button>
+        </div>
+        <div class="info-meaning">${s.meaning}</div>
+      </div>`).join('')}</div>`;
+  }
+  if(d.antonyms&&d.antonyms.length){
+    html += `<div class="info-card ant"><div class="info-card-label">対義語</div>${d.antonyms.map(s=>`
+      <div class="info-item">
+        <div class="info-item-header">
+          <span class="info-chinese">${s.word}</span>
+          <span class="info-pinyin">${s.pinyin}</span>
+          <button class="mini-speak-btn" onclick="speakWord(event,'${s.word}')">🔊</button>
+        </div>
+        <div class="info-meaning">${s.meaning}</div>
+      </div>`).join('')}</div>`;
+  }
+  if(d.confuse&&d.confuse.length){
+    const cItems = d.confuse.filter(c=>c.word!==d.word&&c.meaning)||[];
+    if(cItems.length){
+      html += `<div class="info-card conf"><div class="info-card-label">⚠ 混同しやすい成語</div>${cItems.map(s=>`
+        <div class="info-item">
+          <div class="info-item-header">
+            <span class="info-chinese">${s.word}</span>
+            <span class="info-pinyin">${s.pinyin}</span>
+            <button class="mini-speak-btn" onclick="speakWord(event,'${s.word}')">🔊</button>
+          </div>
+          <div class="info-meaning">${s.meaning}</div>
+        </div>`).join('')}</div>`;
+    }
+  }
+  if(d.origin){
+    html += `<div style="grid-column:1/-1;border:1px solid rgba(123,94,167,.25);border-top:2px solid var(--purple);border-radius:2px;padding:12px 14px;background:rgba(123,94,167,.04);">
+      <div style="font-size:9px;letter-spacing:.25em;color:var(--purple);margin-bottom:8px;display:flex;align-items:center;gap:5px;">
+        <span style="display:inline-block;width:14px;height:1px;background:var(--purple);"></span>📜 由来・出典
+      </div>
+      <div style="font-size:12px;line-height:1.8;color:var(--faded);">${d.origin}</div>
+    </div>`;
+  }
+  ig.innerHTML = html;
+
+  // Progress
+  const fill = ((currentIdx+1)/currentDeck.length*100).toFixed(1);
+  document.getElementById('progressFill').style.width = fill+'%';
+  document.getElementById('progressText').textContent = `${currentIdx+1} / ${currentDeck.length}`;
+  document.getElementById('flipBtnText').textContent = isFlipped ? '表に戻す' : 'めくる';
+  document.getElementById('prevBtn').disabled = currentIdx===0;
+  document.getElementById('nextBtn').disabled = currentIdx===currentDeck.length-1;
+  buildDots();
+}
+
+function buildDots(){
+  const dots = document.getElementById('dots');
+  dots.innerHTML = currentDeck.map((w,i)=>{
+    let cls = 'dot';
+    if(i===currentIdx) cls+=' active';
+    if(learnedSet.has(w.word)) cls+=' is-learned';
+    if(weakSet.has(w.word)) cls+=' is-weak';
+    return `<div class="${cls}" onclick="jumpTo(${i})"></div>`;
+  }).join('');
+}
+function jumpTo(i){ currentIdx=i; isFlipped=false; document.getElementById('card').classList.remove('flipped'); renderCard(); }
+
+function flipCard(){
+  isFlipped = !isFlipped;
+  document.getElementById('card').classList.toggle('flipped', isFlipped);
+  document.getElementById('flipBtnText').textContent = isFlipped ? '表に戻す' : 'めくる';
+}
+
+function navigate(dir){
+  const ni = currentIdx + dir;
+  if(ni<0||ni>=currentDeck.length) return;
+  const card = document.getElementById('card');
+  const outCls = dir>0?'slide-out-l':'slide-out-r';
+  const inCls  = dir>0?'slide-in-r':'slide-in-l';
+  card.classList.add(outCls);
+  setTimeout(()=>{
+    card.classList.remove(outCls,'flipped');
+    currentIdx = ni;
+    isFlipped = false;
+    renderCard();
+    card.classList.add(inCls);
+    setTimeout(()=>card.classList.remove(inCls), 320);
+  }, 280);
+}
+
+function toggleLearned(e){
+  e.stopPropagation();
+  const w = currentDeck[currentIdx].word;
+  if(learnedSet.has(w)) learnedSet.delete(w); else learnedSet.add(w);
+  saveSet(LS_LEARNED, learnedSet);
+  renderCard();
+}
+function toggleWeak(e){
+  e.stopPropagation();
+  const w = currentDeck[currentIdx].word;
+  if(weakSet.has(w)) weakSet.delete(w); else weakSet.add(w);
+  saveSet(LS_WEAK, weakSet);
+  renderCard();
+}
+
+// ===================== TTS =====================
+function speakCurrent(e){
+  e.stopPropagation();
+  speakWord(e, currentDeck[currentIdx].word);
+}
+function speakWord(e, text){
+  e && e.stopPropagation();
+  if(!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'zh-CN'; utt.rate = 0.85;
+  const voices = window.speechSynthesis.getVoices().filter(v=>v.lang.startsWith('zh'));
+  if(voices.length) utt.voice = voices[0];
+  const clickedBtn = e && e.target && e.target.classList.contains('mini-speak-btn') ? e.target : null;
+  const btn = clickedBtn || (e && e.currentTarget) || document.getElementById('speakBtn');
+  if(btn){ btn.classList.add('speaking'); }
+  utt.onend = ()=>{ if(btn) btn.classList.remove('speaking'); document.getElementById('ttsStatus').textContent=''; };
+  utt.onerror = ()=>{ if(btn) btn.classList.remove('speaking'); };
+  document.getElementById('ttsStatus').textContent = `🔊 音声再生中：${text}`;
+  window.speechSynthesis.speak(utt);
+}
+
+// ===================== MODE =====================
+function updateModeBtns(){
+  document.querySelectorAll('.mode-btn').forEach((b,i)=>{
+    b.classList.toggle('active',['card','test'][i]===currentMode);
+  });
+}
+function switchMode(mode){
+  currentMode = mode;
+  updateModeBtns();
+  if(mode==='card'){
+    document.getElementById('card').style.display='';
+    document.querySelector('.nav-area').style.display='';
+    document.getElementById('dots').style.display='';
+    document.getElementById('ttsStatus').style.display='';
+    document.getElementById('progressFill').parentElement.parentElement.style.display='';
+    document.getElementById('testScreen').classList.remove('active');
+    document.getElementById('cardScreen').classList.add('active');
+    renderCard();
+  } else {
+    document.getElementById('testScreenTitle').textContent = currentDeck===allWords? 'テスト（全問）' : themes.find(t=>t.id===currentThemeId)?.name||'テスト';
+    showScreen('testScreen');
+    startTest();
+  }
+}
+
+// ===================== TEST =====================
+function setTestType(t){
+  testType = t;
+  document.querySelectorAll('.test-type-btn').forEach((b,i)=>{
+    b.classList.toggle('active',['meaning','word','pinyin'][i]===t);
+  });
+  startTest();
+}
+function startTest(){
+  testDeck = [...currentDeck].sort(()=>Math.random()-.5);
+  testIdx=0; testCorrect=0; testAnswered=false;
+  updateTestScore();
+  renderTest();
+}
+function updateTestScore(){
+  document.getElementById('testScore').innerHTML = `${testCorrect} <span>/ ${testIdx}</span>`;
+  document.getElementById('testProgress').textContent = `${testIdx+1} / ${testDeck.length}`;
+}
+function renderTest(){
+  if(testIdx>=testDeck.length){ showTestComplete(); return; }
+  testCurrentWord = testDeck[testIdx];
+  testAnswered = false;
+  const tc = document.getElementById('testContent');
+
+  if(testType==='meaning'){
+    const opts = getOptions(testCurrentWord, w=>w.meaning, 4);
+    tc.innerHTML = `<div class="test-card">
+      <div class="test-q-word">${testCurrentWord.word}</div>
+      <div class="test-q-pinyin">${testCurrentWord.pinyin}</div>
+      <div class="choices">${opts.map(o=>`
+        <button class="choice-btn" onclick="answerMC(this,'${o.word}')">${o.meaning}</button>`).join('')}
+      </div>
+      <div class="test-result-box" id="testResultBox">
+        <div class="result-word">${testCurrentWord.word}（${testCurrentWord.pinyin}）</div>
+        <div>${testCurrentWord.meaning}</div>
+      </div>
+      <button class="next-test-btn" id="nextTestBtn" style="display:none;" onclick="nextTest()">次の問題 →</button>
+    </div>`;
+  } else if(testType==='word'){
+    const opts = getOptions(testCurrentWord, w=>w.word, 4);
+    tc.innerHTML = `<div class="test-card">
+      <div class="test-q-meaning">${testCurrentWord.meaning}</div>
+      <div class="choices">${opts.map(o=>`
+        <button class="choice-btn" onclick="answerMC(this,'${o.word}')">
+          <span class="choice-chinese">${o.word}</span>${o.pinyin}
+        </button>`).join('')}
+      </div>
+      <div class="test-result-box" id="testResultBox">
+        <div class="result-word">${testCurrentWord.word}（${testCurrentWord.pinyin}）</div>
+        <div>${testCurrentWord.meaning}</div>
+      </div>
+      <button class="next-test-btn" id="nextTestBtn" style="display:none;" onclick="nextTest()">次の問題 →</button>
+    </div>`;
+  } else {
+    tc.innerHTML = `<div class="test-card">
+      <div class="test-q-word">${testCurrentWord.word}</div>
+      <div class="test-q-meaning">${testCurrentWord.meaning}</div>
+      <div class="pinyin-input-wrap">
+        <div class="pinyin-hint">拼音を入力（例：nǐ hǎo / ni hao）</div>
+        <input class="pinyin-input" id="pinyinInput" placeholder="拼音を入力…" onkeydown="if(event.key==='Enter')submitPinyin()">
+        <div class="pinyin-feedback" id="pinyinFeedback"></div>
+        <button class="submit-btn" onclick="submitPinyin()">確認</button>
+      </div>
+      <div class="test-result-box" id="testResultBox">
+        <div class="result-word">${testCurrentWord.word}</div>
+        <div>正解：${testCurrentWord.pinyin}</div>
+      </div>
+      <button class="next-test-btn" id="nextTestBtn" style="display:none;" onclick="nextTest()">次の問題 →</button>
+    </div>`;
+    setTimeout(()=>document.getElementById('pinyinInput')?.focus(),100);
+  }
+}
+function getOptions(correct, keyFn, n){
+  const pool = currentDeck.filter(w=>w.word!==correct.word);
+  const shuffled = pool.sort(()=>Math.random()-.5).slice(0,n-1);
+  return [correct,...shuffled].sort(()=>Math.random()-.5);
+}
+function answerMC(btn, chosen){
+  if(testAnswered) return;
+  testAnswered = true;
+  const correct = chosen===testCurrentWord.word;
+  if(correct){ testCorrect++; btn.classList.add('correct'); }
+  else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.choice-btn').forEach(b=>{
+      const txt = b.textContent.trim();
+      if(txt===testCurrentWord.meaning||b.querySelector('.choice-chinese')?.textContent===testCurrentWord.word)
+        b.classList.add('correct');
+    });
+    weakSet.add(testCurrentWord.word);
+    saveSet(LS_WEAK, weakSet);
+  }
+  document.querySelectorAll('.choice-btn').forEach(b=>b.disabled=true);
+  document.getElementById('testResultBox').classList.add('show');
+  document.getElementById('nextTestBtn').style.display='block';
+  testIdx++;
+  updateTestScore();
+}
+function submitPinyin(){
+  if(testAnswered) return;
+  const input = document.getElementById('pinyinInput');
+  const val = input.value.trim().toLowerCase().replace(/\s+/g,' ');
+  const correct = testCurrentWord.pinyin.toLowerCase().replace(/[āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜ]/g,m=>'aaaaooooeeeeiiiiuuuuvvvv'['āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜ'.indexOf(m)]).replace(/\s+/g,' ');
+  const plain = val.replace(/[āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜ]/g,m=>'aaaaooooeeeeiiiiuuuuvvvv'['āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜ'.indexOf(m)]);
+  const isCorrect = val===testCurrentWord.pinyin.toLowerCase() || plain===correct;
+  testAnswered = true;
+  input.disabled = true;
+  const fb = document.getElementById('pinyinFeedback');
+  if(isCorrect){
+    testCorrect++;
+    input.classList.add('correct');
+    fb.className='pinyin-feedback correct'; fb.textContent='✓ 正解！';
+  } else {
+    input.classList.add('wrong');
+    fb.className='pinyin-feedback wrong'; fb.textContent=`✗ 正解：${testCurrentWord.pinyin}`;
+    weakSet.add(testCurrentWord.word);
+    saveSet(LS_WEAK, weakSet);
+  }
+  document.getElementById('testResultBox').classList.add('show');
+  document.getElementById('nextTestBtn').style.display='block';
+  testIdx++;
+  updateTestScore();
+}
+function nextTest(){ if(testIdx>=testDeck.length){ showTestComplete(); return; } renderTest(); }
+function showTestComplete(){
+  const pct = testDeck.length>0 ? Math.round(testCorrect/testDeck.length*100) : 0;
+  const msg = pct>=90?'🎉 素晴らしい！':pct>=70?'👍 よくできました！':pct>=50?'📖 もう少し復習しましょう。':'💪 苦手リストで重点学習を！';
+  document.getElementById('testContent').innerHTML=`<div class="test-complete">
+    <div class="tc-score">${testCorrect}/${testDeck.length}</div>
+    <div class="tc-msg">${pct}点　${msg}</div>
+    <button class="restart-btn" onclick="startTest()">もう一度</button>
+  </div>`;
+}
+
+// ===================== INIT =====================
+window.addEventListener('load', ()=>{
+  if(window.speechSynthesis) window.speechSynthesis.getVoices();
+  buildHome();
+});
+</script>
+</body>
+</html>
