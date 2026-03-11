@@ -155,7 +155,7 @@ body::after{
 .info-item-header{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
 .info-chinese{font-family:'Noto Serif SC',serif;font-size:15px;font-weight:600;}
 .info-pinyin{font-size:11px;color:var(--faded);flex:1;}
-.mini-speak-btn{background:none;border:1px solid rgba(201,150,42,.4);color:var(--gold);width:20px;height:20px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;transition:all .2s;}
+.mini-speak-btn{background:none;border:1px solid rgba(201,150,42,.4);color:var(--gold);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:all .2s;touch-action:manipulation;}
 .mini-speak-btn:hover{background:var(--gold);color:white;}
 .info-meaning{font-size:12px;color:var(--faded);line-height:1.5;}
 .ex-card{border:1px solid rgba(201,150,42,.2);border-top:2px solid var(--gold);border-radius:2px;padding:12px 14px;background:rgba(255,255,255,.35);margin-top:4px;grid-column:1/-1;}
@@ -295,7 +295,9 @@ body::after{
     <button class="nav-tab active" onclick="showHomeTab('themes')">📚 テーマ別学習</button>
     <button class="nav-tab" onclick="showHomeTab('index')">📋 索引</button>
     <button class="nav-tab" onclick="showHomeTab('weak')">⚠️ 苦手リスト</button>
+    <button class="nav-tab" onclick="showHomeTab('test')">📝 テスト</button>
   </div>
+  <div id="homeTest" style="display:none;max-width:900px;margin:0 auto;"></div>
   <div id="homeThemes" class="theme-grid"></div>
   <div id="homeIndex" class="index-preview" style="display:none;">
     <div class="index-grid" id="indexGrid"></div>
@@ -368,7 +370,11 @@ body::after{
 <div id="testScreen" class="screen">
   <div class="screen-header">
     <button class="back-btn" onclick="goHome()">←</button>
-    <div class="screen-title" id="testScreenTitle">テスト</div>
+    <div><div class="screen-title" id="testScreenTitle">テスト</div></div>
+    <div class="mode-btns" style="margin-left:auto;">
+      <button class="mode-btn" onclick="switchMode('card')">カード</button>
+      <button class="mode-btn active" onclick="switchMode('test')">テスト</button>
+    </div>
   </div>
   <div class="test-type-bar">
     <button class="test-type-btn active" onclick="setTestType('meaning')">意味を当てる</button>
@@ -779,11 +785,14 @@ function removeWeak(e, word){ e.stopPropagation(); weakSet.delete(word); saveSet
 
 function showHomeTab(tab) {
   document.querySelectorAll('.nav-tab').forEach((b,i)=>{
-    b.classList.toggle('active', ['themes','index','weak'][i]===tab);
+    b.classList.toggle('active', ['themes','index','weak','test'][i]===tab);
   });
   document.getElementById('homeThemes').style.display  = tab==='themes'?'grid':'none';
   document.getElementById('homeIndex').style.display   = tab==='index'?'block':'none';
   document.getElementById('homeWeak').style.display    = tab==='weak'?'block':'none';
+  const homeTest = document.getElementById('homeTest');
+  if(homeTest) homeTest.style.display = tab==='test'?'block':'none';
+  if(tab==='test') renderHomeTest();
 }
 
 function openTheme(themeId, startWord) {
@@ -798,6 +807,9 @@ function openTheme(themeId, startWord) {
   showScreen('cardScreen');
   renderCard();
   updateModeBtns();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
 }
 function openFromIndex(tid,word){ openTheme(tid,word); }
 function goHome(){ showScreen('homeScreen'); buildHome(); window.speechSynthesis&&window.speechSynthesis.cancel(); }
@@ -951,7 +963,7 @@ function speakCurrent(e){
   speakWord(e, currentDeck[currentIdx].word);
 }
 function speakWord(e, text){
-  e && e.stopPropagation();
+  if(e){ e.stopPropagation(); e.preventDefault(); }
   if(!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
   const utt = new SpeechSynthesisUtterance(text);
@@ -1131,6 +1143,58 @@ window.addEventListener('load', ()=>{
   if(window.speechSynthesis) window.speechSynthesis.getVoices();
   buildHome();
 });
+
+// ===================== HOME TEST =====================
+function renderHomeTest(){
+  const el = document.getElementById('homeTest');
+  if(!el) return;
+  let html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;">';
+  themes.forEach(t=>{
+    html += `<div class="theme-card" onclick="openThemeTest('${t.id}')">
+      <div class="tc-accent"></div>
+      <div class="tc-name">${t.name}</div>
+      <div class="tc-count">${t.words.length} 語のテスト</div>
+      <div class="tc-words">${t.words.slice(0,4).map(w=>w.word).join('・')}…</div>
+    </div>`;
+  });
+  html += `<div class="theme-card" onclick="openAllTest()">
+    <div class="tc-accent" style="background:var(--red)"></div>
+    <div class="tc-name">🎯 全成語テスト</div>
+    <div class="tc-count">${allWords.length} 語すべてのテスト</div>
+    <div class="tc-words">全テーマの成語をまとめてテスト</div>
+  </div>`;
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function openThemeTest(themeId){
+  const theme = themes.find(t=>t.id===themeId);
+  if(!theme) return;
+  currentDeck = theme.words;
+  currentIdx = 0;
+  isFlipped = false;
+  currentMode = 'test';
+  if(document.getElementById('testScreenTitle')) document.getElementById('testScreenTitle').textContent = theme.name + ' テスト';
+  showScreen('testScreen');
+  startTest();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
+function openAllTest(){
+  currentDeck = [...allWords];
+  currentIdx = 0;
+  isFlipped = false;
+  currentMode = 'test';
+  if(document.getElementById('testScreenTitle')) document.getElementById('testScreenTitle').textContent = '全成語テスト';
+  showScreen('testScreen');
+  startTest();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
 </script>
 </body>
 </html>

@@ -155,7 +155,7 @@ body::after{
 .info-item-header{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
 .info-chinese{font-family:'Noto Serif SC',serif;font-size:15px;font-weight:600;}
 .info-pinyin{font-size:11px;color:var(--faded);flex:1;}
-.mini-speak-btn{background:none;border:1px solid rgba(201,150,42,.4);color:var(--gold);width:20px;height:20px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;transition:all .2s;}
+.mini-speak-btn{background:none;border:1px solid rgba(201,150,42,.4);color:var(--gold);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;transition:all .2s;touch-action:manipulation;}
 .mini-speak-btn:hover{background:var(--gold);color:white;}
 .info-meaning{font-size:12px;color:var(--faded);line-height:1.5;}
 .ex-card{border:1px solid rgba(201,150,42,.2);border-top:2px solid var(--gold);border-radius:2px;padding:12px 14px;background:rgba(255,255,255,.35);margin-top:4px;grid-column:1/-1;}
@@ -295,7 +295,9 @@ body::after{
     <button class="nav-tab active" onclick="showHomeTab('themes')">📚 テーマ別学習</button>
     <button class="nav-tab" onclick="showHomeTab('index')">📋 索引</button>
     <button class="nav-tab" onclick="showHomeTab('weak')">⚠️ 苦手リスト</button>
+    <button class="nav-tab" onclick="showHomeTab('test')">📝 テスト</button>
   </div>
+  <div id="homeTest" style="display:none;max-width:900px;margin:0 auto;"></div>
   <div id="homeThemes" class="theme-grid"></div>
   <div id="homeIndex" class="index-preview" style="display:none;">
     <div class="index-grid" id="indexGrid"></div>
@@ -368,7 +370,11 @@ body::after{
 <div id="testScreen" class="screen">
   <div class="screen-header">
     <button class="back-btn" onclick="goHome()">←</button>
-    <div class="screen-title" id="testScreenTitle">テスト</div>
+    <div><div class="screen-title" id="testScreenTitle">テスト</div></div>
+    <div class="mode-btns" style="margin-left:auto;">
+      <button class="mode-btn" onclick="switchMode('card')">カード</button>
+      <button class="mode-btn active" onclick="switchMode('test')">テスト</button>
+    </div>
   </div>
   <div class="test-type-bar">
     <button class="test-type-btn active" onclick="setTestType('meaning')">意味を当てる</button>
@@ -809,6 +815,58 @@ function buildHome() {
   updateProgressSummary();
 }
 
+function renderHomeTest(){
+  const el = document.getElementById('homeTest');
+  let html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;">';
+  themes.forEach(t=>{
+    html += `<div class="theme-card" onclick="openThemeTest('${t.id}')">
+      <div class="tc-accent"></div>
+      <div class="tc-name">${t.name}</div>
+      <div class="tc-count">${t.words.length} 語のテスト</div>
+      <div class="tc-words">${t.words.slice(0,4).map(w=>w.word).join('・')}…</div>
+    </div>`;
+  });
+  html += `<div class="theme-card" onclick="openAllTest()">
+    <div class="tc-accent" style="background:var(--red)"></div>
+    <div class="tc-name">🎯 全成語テスト</div>
+    <div class="tc-count">${allWords.length} 語すべてのテスト</div>
+    <div class="tc-words">全テーマの成語をまとめてテスト</div>
+  </div>`;
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function openThemeTest(themeId){
+  const theme = themes.find(t=>t.id===themeId);
+  if(!theme) return;
+  currentThemeId = themeId;
+  currentDeck = theme.words;
+  currentIdx = 0;
+  isFlipped = false;
+  currentMode = 'test';
+  document.getElementById('cardScreenTitle').textContent = theme.name;
+  document.getElementById('testScreenTitle').textContent = theme.name + ' テスト';
+  showScreen('testScreen');
+  startTest();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
+function openAllTest(){
+  currentThemeId = null;
+  currentDeck = [...allWords];
+  currentIdx = 0;
+  isFlipped = false;
+  currentMode = 'test';
+  document.getElementById('testScreenTitle').textContent = '全成語テスト';
+  showScreen('testScreen');
+  startTest();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
 function updateProgressSummary(){
   const total = allWords.length;
   const lc = allWords.filter(w=>learnedSet.has(w.word)).length;
@@ -820,12 +878,14 @@ function updateProgressSummary(){
 
 function showHomeTab(tab){
   document.querySelectorAll('.nav-tab').forEach((b,i)=>{
-    b.classList.toggle('active',['themes','index','weak'][i]===tab);
+    b.classList.toggle('active',['themes','index','weak','test'][i]===tab);
   });
   document.getElementById('homeThemes').style.display = tab==='themes'?'grid':'none';
   document.getElementById('homeIndex').style.display = tab==='index'?'block':'none';
   document.getElementById('homeWeak').style.display = tab==='weak'?'block':'none';
+  document.getElementById('homeTest').style.display = tab==='test'?'block':'none';
   if(tab==='weak') renderWeak();
+  if(tab==='test') renderHomeTest();
 }
 
 function renderWeak(){
@@ -851,6 +911,58 @@ function removeWeak(e,word){
   updateProgressSummary();
 }
 
+function renderHomeTest(){
+  const el = document.getElementById('homeTest');
+  let html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;">';
+  themes.forEach(t=>{
+    html += `<div class="theme-card" onclick="openThemeTest('${t.id}')">
+      <div class="tc-accent"></div>
+      <div class="tc-name">${t.name}</div>
+      <div class="tc-count">${t.words.length} 語のテスト</div>
+      <div class="tc-words">${t.words.slice(0,4).map(w=>w.word).join('・')}…</div>
+    </div>`;
+  });
+  html += `<div class="theme-card" onclick="openAllTest()">
+    <div class="tc-accent" style="background:var(--red)"></div>
+    <div class="tc-name">🎯 全成語テスト</div>
+    <div class="tc-count">${allWords.length} 語すべてのテスト</div>
+    <div class="tc-words">全テーマの成語をまとめてテスト</div>
+  </div>`;
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function openThemeTest(themeId){
+  const theme = themes.find(t=>t.id===themeId);
+  if(!theme) return;
+  currentThemeId = themeId;
+  currentDeck = theme.words;
+  currentIdx = 0;
+  isFlipped = false;
+  currentMode = 'test';
+  document.getElementById('cardScreenTitle').textContent = theme.name;
+  document.getElementById('testScreenTitle').textContent = theme.name + ' テスト';
+  showScreen('testScreen');
+  startTest();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
+function openAllTest(){
+  currentThemeId = null;
+  currentDeck = [...allWords];
+  currentIdx = 0;
+  isFlipped = false;
+  currentMode = 'test';
+  document.getElementById('testScreenTitle').textContent = '全成語テスト';
+  showScreen('testScreen');
+  startTest();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
 // ===================== CARD =====================
 function openTheme(themeId){
   const theme = themes.find(t=>t.id===themeId);
@@ -866,12 +978,18 @@ function openTheme(themeId){
   switchMode('card');
   renderCard();
   renderDots();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
 }
 
 function openFromIndex(themeId, word){
   openTheme(themeId);
   const idx = currentDeck.findIndex(w=>w.word===word);
   if(idx>=0){ currentIdx=idx; renderCard(); renderDots(); }
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
 }
 
 function showScreen(id){
@@ -886,19 +1004,25 @@ function goHome(){
 
 function switchMode(mode){
   currentMode = mode;
-  document.querySelectorAll('.mode-btn').forEach((b,i)=>{
-    b.classList.toggle('active',['card','test'][i]===mode);
+  document.querySelectorAll('.mode-btn').forEach(b=>{
+    const txt = b.textContent.trim();
+    b.classList.toggle('active',(mode==='card'&&txt==='カード')||(mode==='test'&&txt==='テスト'));
   });
   if(mode==='card'){
-    document.getElementById('cardScreen').style.display='block';
-    document.getElementById('testScreen').style.display='none';
+    document.getElementById('cardScreen').style.display='';
+    document.getElementById('testScreen').style.display='';
     showScreen('cardScreen');
-    document.getElementById('cardScreen').classList.add('active');
-    document.getElementById('testScreen').classList.remove('active');
+    window.scrollTo({top:0, behavior:'instant'});
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   } else {
-    document.getElementById('testScreen').classList.add('active');
-    document.getElementById('cardScreen').classList.remove('active');
+    document.getElementById('cardScreen').style.display='';
+    document.getElementById('testScreen').style.display='';
+    showScreen('testScreen');
     startTest();
+    window.scrollTo({top:0, behavior:'instant'});
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
   }
 }
 
@@ -1051,7 +1175,7 @@ function speakCurrent(e){
   speakWord(null, currentDeck[currentIdx]?.word);
 }
 function speakWord(e, word){
-  e && e.stopPropagation();
+  if(e){ e.stopPropagation(); e.preventDefault(); }
   if(!word || !window.speechSynthesis) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(word);
@@ -1060,7 +1184,7 @@ function speakWord(e, word){
   const zh = voices.find(v=>v.lang.startsWith('zh'));
   if(zh) u.voice = zh;
   const mainBtn = document.getElementById('speakBtn');
-  const clickedBtn = e && e.target && e.target.classList.contains('mini-speak-btn') ? e.target : null;
+  const clickedBtn = e && e.target ? (e.target.closest('.mini-speak-btn') || (e.target.classList.contains('mini-speak-btn') ? e.target : null)) : null;
   const activeBtn = clickedBtn || mainBtn;
   if(activeBtn){ activeBtn.classList.add('speaking'); u.onend=()=>activeBtn.classList.remove('speaking'); }
   window.speechSynthesis.speak(u);

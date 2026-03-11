@@ -402,11 +402,13 @@ body::after{
   <div class="home-nav">
     <button class="nav-tab active" onclick="showHomeTab('themes')">📚 テーマ別学習</button>
     <button class="nav-tab" onclick="showHomeTab('index')">📋 索引</button>
+    <button class="nav-tab" onclick="showHomeTab('test')">📝 テスト</button>
   </div>
   <div id="homeThemes" class="theme-grid"></div>
   <div id="homeIndex" class="index-preview" style="display:none;">
     <div class="index-grid" id="indexGrid"></div>
   </div>
+  <div id="homeTest" style="display:none;max-width:900px;margin:0 auto;"></div>
   <footer class="home-footer">
     <div class="footer-copy">© 2025- 楓家中国語学習支援制作チーム　All Rights Reserved.</div>
     <div class="footer-notice">本コンテンツの無断複製・転載・配布・商業利用を禁じます。個人学習目的の閲覧のみ許可します。</div>
@@ -468,7 +470,11 @@ body::after{
 <div id="testScreen" class="screen">
   <div class="screen-header">
     <button class="back-btn" onclick="goHome()">←</button>
-    <div class="screen-title" id="testScreenTitle">テスト</div>
+    <div><div class="screen-title" id="testScreenTitle">テスト</div></div>
+    <div class="mode-btns" style="margin-left:auto;">
+      <button class="mode-btn" onclick="switchMode('card')">カード</button>
+      <button class="mode-btn active" onclick="switchMode('test')">テスト</button>
+    </div>
   </div>
   <div class="test-type-bar">
     <button class="test-type-btn active" onclick="setTestType('meaning')">意味を当てる</button>
@@ -803,10 +809,13 @@ function buildHome() {
 
 function showHomeTab(tab) {
   document.querySelectorAll('.nav-tab').forEach((b,i)=>{
-    b.classList.toggle('active', (tab==='themes'&&i===0)||(tab==='index'&&i===1));
+    b.classList.toggle('active', (tab==='themes'&&i===0)||(tab==='index'&&i===1)||(tab==='test'&&i===2));
   });
   document.getElementById('homeThemes').style.display = tab==='themes'?'grid':'none';
   document.getElementById('homeIndex').style.display = tab==='index'?'block':'none';
+  const homeTest = document.getElementById('homeTest');
+  if(homeTest) homeTest.style.display = tab==='test'?'block':'none';
+  if(tab==='test') renderHomeTest();
 }
 
 function openTheme(themeId, startWord) {
@@ -822,6 +831,9 @@ function openTheme(themeId, startWord) {
   showScreen('cardScreen');
   renderCard();
   updateModeBtns();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
 }
 
 function openFromIndex(themeId, word) {
@@ -1394,6 +1406,58 @@ themes.forEach(t => t.words.forEach(w => {
 }));
 
 buildHome();
+
+// ===================== HOME TEST =====================
+function renderHomeTest(){
+  const el = document.getElementById('homeTest');
+  if(!el) return;
+  let html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;">';
+  themes.forEach(t=>{
+    html += `<div class="theme-card" onclick="openThemeTest('${t.id}')">
+      <div class="tc-accent"></div>
+      <div class="tc-name">${t.name}</div>
+      <div class="tc-count">${t.words.length} 語のテスト</div>
+      <div class="tc-words">${t.words.slice(0,4).map(w=>w.word).join('・')}…</div>
+    </div>`;
+  });
+  html += `<div class="theme-card" onclick="openAllTest()">
+    <div class="tc-accent" style="background:var(--red)"></div>
+    <div class="tc-name">🎯 全成語テスト</div>
+    <div class="tc-count">${allWords.length} 語すべてのテスト</div>
+    <div class="tc-words">全テーマの成語をまとめてテスト</div>
+  </div>`;
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function openThemeTest(themeId){
+  const theme = themes.find(t=>t.id===themeId);
+  if(!theme) return;
+  currentDeck = theme.words;
+  currentIdx = 0;
+  isFlipped = false;
+  currentMode = 'test';
+  if(document.getElementById('testScreenTitle')) document.getElementById('testScreenTitle').textContent = theme.name + ' テスト';
+  showScreen('testScreen');
+  startTest();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
+function openAllTest(){
+  currentDeck = [...allWords];
+  currentIdx = 0;
+  isFlipped = false;
+  currentMode = 'test';
+  if(document.getElementById('testScreenTitle')) document.getElementById('testScreenTitle').textContent = '全成語テスト';
+  showScreen('testScreen');
+  startTest();
+  window.scrollTo({top:0, behavior:'instant'});
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+}
+
 </script>
 </body>
 </html>
